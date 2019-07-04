@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>blueprint</artifactId>
+        <groupId>org.fundaciobit.blueprint</groupId>
+        <version>0.9</version>
+    </parent>
+
+    <artifactId>blueprint-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <name>blueprint: EAR Module</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.fundaciobit.blueprint</groupId>
+            <artifactId>blueprint-web</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.fundaciobit.blueprint</groupId>
+            <artifactId>blueprint-ejb</artifactId>
+            <type>ejb</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Nom de l'ear definit per l'estàndard és el nom del projecte pare. -->
+        <finalName>${project.parent.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <version>8</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <outputFileNameMapping>@{artifactId}@-@{version}@.@{extension}@</outputFileNameMapping>
+                    <modules>
+                        <webModule>
+                            <groupId>org.fundaciobit.blueprint</groupId>
+                            <artifactId>blueprint-web</artifactId>
+                            <contextRoot>blueprint</contextRoot>
+                        </webModule>
+                        <ejbModule>
+                            <groupId>org.fundaciobit.blueprint</groupId>
+                            <artifactId>blueprint-ejb</artifactId>
+                        </ejbModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
