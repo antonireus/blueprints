@@ -37,6 +37,7 @@
                 <configuration>
                     <version>8</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <includeLibInApplicationXml>false</includeLibInApplicationXml>
                     <!--suppress UnresolvedMavenProperty -->
                     <outputFileNameMapping>@{artifactId}@-@{version}@.@{extension}@</outputFileNameMapping>
                     <modules>
@@ -52,6 +53,22 @@
                     </modules>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <deployables>
+                        <deployable>
+                            <properties>
+                                <name>${project.build.finalName}</name>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
