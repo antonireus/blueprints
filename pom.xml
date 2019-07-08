@@ -43,6 +43,7 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- Dependència per la instal·lació dels servidors amb cargo -->
     <dependencies>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -114,7 +115,7 @@
                 </plugin>
 
                 <!--
-                Plugin per permetre desplegar l'aplicació a un sevidor d'aplicacions
+                Plugin per permetre desplegar l'aplicació a un sevidor d'aplicacions. Per defecte Wildfly 14
                 ús: https://codehaus-cargo.github.io/cargo/Maven2+plugin.html
                 configuració: https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html
                 -->
@@ -122,12 +123,13 @@
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
                     <version>1.7.5</version>
-                    <configuration>
+                    <configuration><!-- https://codehaus-cargo.github.io/cargo/WildFly+14.x.html -->
                         <container>
                             <containerId>wildfly14x</containerId>
                             <zipUrlInstaller>
-                                <!-- <url>https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.zip</url> -->
-                                <url>file:///C:/Desenvolupament/servers/wildfly-14.0.1.Final.zip</url>
+                                <url>https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.zip</url>
+                                <downloadDir>${user.cargo.downloadDir}</downloadDir>
+                                <extractDir>${user.cargo.extractDir}</extractDir>
                             </zipUrlInstaller>
                             <dependencies>
                                 <dependency>
@@ -186,8 +188,8 @@
                                 <container>
                                     <containerId>glassfish5x</containerId>
                                     <zipUrlInstaller>
-                                        <!-- <url>https://www.eclipse.org/downloads/download.php?file=/glassfish/glassfish-5.1.0.zip</url> -->
-                                        <url>file:///C:/Desenvolupament/servers/glassfish-5.1.0.zip</url>
+                                        <url>https://download.oracle.com/glassfish/5.0.1/release/glassfish-5.0.1.zip</url>
+                                        <!-- <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/glassfish/glassfish-5.1.0.zip</url> -->
                                     </zipUrlInstaller>
                                 </container>
                             </configuration>
@@ -208,8 +210,7 @@
                                 <container>
                                     <containerId>liberty</containerId>
                                     <zipUrlInstaller>
-                                        <!-- <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.6/wlp-javaee8-19.0.0.6.zip</url> -->
-                                        <url>file:///C:/Desenvolupament/servers/wlp-javaee8-19.0.0.6.zip</url>
+                                        <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.6/wlp-javaee8-19.0.0.6.zip</url>
                                     </zipUrlInstaller>
                                 </container>
                             </configuration>
