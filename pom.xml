@@ -213,6 +213,20 @@
                                         <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.6/wlp-javaee8-19.0.0.6.zip</url>
                                     </zipUrlInstaller>
                                 </container>
+                                <configuration>
+                                    <datasources>
+                                        <datasource>
+                                            <!-- Fix ja que la configuració que genera per defecte no funciona -->
+                                            <connectionProperties>
+                                                <user>blueprint</user>
+                                                <password>blueprint</password>
+                                            </connectionProperties>
+                                        </datasource>
+                                    </datasources>
+                                    <properties>
+                                        <cargo.servlet.port>9080</cargo.servlet.port>
+                                    </properties>
+                                </configuration>
                             </configuration>
                         </plugin>
                     </plugins>
