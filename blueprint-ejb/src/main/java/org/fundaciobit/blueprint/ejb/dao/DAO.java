@@ -6,7 +6,11 @@ public interface DAO<K, E> {
 
     E create(E entity);
 
-    void delete(K entity);
+    E update(E entity);
+
+    void delete(E entity);
+
+    void deleteById(K id);
 
     E findById(K id);
 

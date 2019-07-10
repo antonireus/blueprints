@@ -23,6 +23,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.fundaciobit.blueprint</groupId>
+            <artifactId>blueprint-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

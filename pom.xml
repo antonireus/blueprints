@@ -12,6 +12,7 @@
         <module>blueprint-ejb</module>
         <module>blueprint-web</module>
         <module>blueprint-ear</module>
+        <module>blueprint-common</module>
     </modules>
 
     <properties>
@@ -27,6 +28,13 @@
         <dependencies>
             <!-- Fixar les versions de les llibreries, perquè a les dependències declarades als mòduls
             no s'hagin de fixar -->
+            <dependency>
+                <groupId>org.fundaciobit.blueprint</groupId>
+                <artifactId>blueprint-common</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
+
             <dependency>
                 <groupId>org.fundaciobit.blueprint</groupId>
                 <artifactId>blueprint-ejb</artifactId>

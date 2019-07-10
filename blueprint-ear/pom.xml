@@ -17,13 +17,18 @@
     <dependencies>
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
-            <artifactId>blueprint-web</artifactId>
-            <type>war</type>
+            <artifactId>blueprint-common</artifactId>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
             <artifactId>blueprint-ejb</artifactId>
             <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>org.fundaciobit.blueprint</groupId>
+            <artifactId>blueprint-web</artifactId>
+            <type>war</type>
         </dependency>
     </dependencies>
 
@@ -41,15 +46,15 @@
                     <!--suppress UnresolvedMavenProperty -->
                     <outputFileNameMapping>@{artifactId}@-@{version}@.@{extension}@</outputFileNameMapping>
                     <modules>
+                        <ejbModule>
+                            <groupId>org.fundaciobit.blueprint</groupId>
+                            <artifactId>blueprint-ejb</artifactId>
+                        </ejbModule>
                         <webModule>
                             <groupId>org.fundaciobit.blueprint</groupId>
                             <artifactId>blueprint-web</artifactId>
                             <contextRoot>blueprint</contextRoot>
                         </webModule>
-                        <ejbModule>
-                            <groupId>org.fundaciobit.blueprint</groupId>
-                            <artifactId>blueprint-ejb</artifactId>
-                        </ejbModule>
                     </modules>
                 </configuration>
             </plugin>

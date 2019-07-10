@@ -24,8 +24,18 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
     }
 
     @Override
-    public void delete(K entity) {
+    public E update(E entity) {
+        return entityManager.merge(entity);
+    }
+
+    @Override
+    public void delete(E entity) {
         entityManager.remove(entity);
+    }
+
+    @Override
+    public void deleteById(K id) {
+        delete(findById(id));
     }
 
     @Override
@@ -36,6 +46,7 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
     @Override
     public List<E> findAll() {
         return entityManager.createQuery(
-                "select e from " + entityClass.getSimpleName() + " e", entityClass).getResultList();
+                "select e from " + entityClass.getSimpleName() + " e", entityClass)
+                .getResultList();
     }
 }
