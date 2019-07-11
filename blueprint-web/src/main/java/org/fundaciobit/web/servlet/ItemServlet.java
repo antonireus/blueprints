@@ -3,7 +3,6 @@ package org.fundaciobit.web.servlet;
 import org.fundaciobit.blueprint.ejb.jpa.Item;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -25,23 +24,26 @@ public class ItemServlet extends HttpServlet {
     @EJB
     private ItemService itemService;
 
-    @PostConstruct
+    @Override
     public void init() {
-        logger.info("INIT");
+        logger.info("init");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
+
+        logger.info("doGet");
 
         String name = request.getParameter("name");
         if (name != null) {
-            logger.info("Creant nou item: " + name);
             Item item = new Item();
             item.setName(name);
+            logger.info("itemService.create: " + name);
             itemService.create(item);
         }
 
+        logger.info("itemService.findAll");
         List<Item> items = itemService.findAll();
 
         ServletOutputStream os = response.getOutputStream();
