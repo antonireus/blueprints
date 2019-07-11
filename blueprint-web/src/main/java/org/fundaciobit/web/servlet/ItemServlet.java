@@ -5,7 +5,6 @@ import org.fundaciobit.blueprint.ejb.service.ItemService;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,9 @@ import java.util.logging.Logger;
 @WebServlet(urlPatterns = "/item")
 public class ItemServlet extends HttpServlet {
 
-    @Inject
+	private static final long serialVersionUID = -7525166929518102623L;
+
+	@Inject
     private Logger logger;
 
     @EJB
