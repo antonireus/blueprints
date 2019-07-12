@@ -53,7 +53,7 @@ public class ItemServlet extends HttpServlet {
         } else {
             os.println("<ul>");
             for (Item item : items) {
-                os.println("<li>" + item.getId() + ", " + item.getName() + "</li>");
+                os.println("<li>" + item.getId() + ", " + item.getName() + ", " + item.getCreation() + "</li>");
             }
             os.println("</ul>");
         }

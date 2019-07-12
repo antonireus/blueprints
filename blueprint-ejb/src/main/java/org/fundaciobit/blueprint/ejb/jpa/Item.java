@@ -9,6 +9,7 @@ import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 
 /**
  * Requisits de les classes persistents:
@@ -38,6 +39,9 @@ public class Item implements Serializable {
    @Column(name = "NAME", nullable = false, length = 1000)
    private String name;
 
+   @Column(name = "CREATION", nullable = false)
+   private OffsetDateTime creation;
+
    public Long getId() {
       return id;
    }
@@ -52,5 +56,13 @@ public class Item implements Serializable {
 
    public void setName(String name) {
       this.name = name;
+   }
+
+   public OffsetDateTime getCreation() {
+      return creation;
+   }
+
+   public void setCreation(OffsetDateTime creation) {
+      this.creation = creation;
    }
 }
