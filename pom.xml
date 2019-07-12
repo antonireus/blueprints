@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>blueprint-common</module>
         <module>blueprint-ejb</module>
         <module>blueprint-web</module>
         <module>blueprint-ear</module>
-        <module>blueprint-common</module>
     </modules>
 
     <properties>
@@ -22,6 +22,9 @@
         <!-- Fixar que el compilador empri source i target 1.8 -->
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+
+        <!-- Per defecte, no fer cap tipus de test -->
+        <maven.test.skip>true</maven.test.skip>
     </properties>
 
     <dependencyManagement>
