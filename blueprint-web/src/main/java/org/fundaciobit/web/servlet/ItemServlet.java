@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = "/item")
+@WebServlet(name = "itemServlet", urlPatterns = "/item")
 public class ItemServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7525166929518102623L;

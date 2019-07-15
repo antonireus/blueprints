@@ -8,8 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 
 /**
  * Requisits de les classes persistents:
@@ -24,6 +28,8 @@ import java.time.OffsetDateTime;
 @Table(name = "BLP_ITEM", indexes =
    @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)
 )
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Item implements Serializable {
 
    private static final long serialVersionUID = 1L;
@@ -40,7 +46,7 @@ public class Item implements Serializable {
    private String name;
 
    @Column(name = "CREATION", nullable = false)
-   private OffsetDateTime creation;
+   private Timestamp creation;
 
    public Long getId() {
       return id;
@@ -58,11 +64,12 @@ public class Item implements Serializable {
       this.name = name;
    }
 
-   public OffsetDateTime getCreation() {
+   @XmlElement(type = java.util.Date.class)
+   public Timestamp getCreation() {
       return creation;
    }
 
-   public void setCreation(OffsetDateTime creation) {
+   public void setCreation(Timestamp creation) {
       this.creation = creation;
    }
 }

@@ -4,14 +4,14 @@ import org.fundaciobit.blueprint.ejb.dao.AbstractJpaDAO;
 import org.fundaciobit.blueprint.ejb.jpa.Item;
 
 import javax.ejb.Stateless;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 
 @Stateless
 public class ItemServiceBean extends AbstractJpaDAO<Long, Item> implements ItemService {
 
    @Override
    public Item create(Item entity) {
-      entity.setCreation(OffsetDateTime.now());
+      entity.setCreation(new Timestamp(System.currentTimeMillis()));
       return super.create(entity);
    }
 }
