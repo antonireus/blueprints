@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Requisits de les classes persistents:
@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 @Table(name = "BLP_ITEM", indexes =
    @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)
 )
-@XmlRootElement(name = "item", namespace = "org.fundaciobit.blueprint")
+@XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Item implements Serializable {
 
@@ -40,7 +40,7 @@ public class Item implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item-sequence")
    @Column(name="ITEMID",nullable = false,length = 19)
-   @XmlElement(nillable = true)
+   @XmlElement(required = true, nillable = true)
    private Long id;
 
    @Column(name = "NAME", nullable = false, length = 1000)
@@ -48,8 +48,8 @@ public class Item implements Serializable {
    private String name;
 
    @Column(name = "CREATION", nullable = false)
-   @XmlElement(nillable = true, type = java.util.Date.class)
-   private Timestamp creation;
+   @XmlElement(required = true, nillable = true)
+   private Date creation;
 
    public Long getId() {
       return id;
@@ -67,11 +67,11 @@ public class Item implements Serializable {
       this.name = name;
    }
 
-   public Timestamp getCreation() {
+   public Date getCreation() {
       return creation;
    }
 
-   public void setCreation(Timestamp creation) {
+   public void setCreation(Date creation) {
       this.creation = creation;
    }
 }
