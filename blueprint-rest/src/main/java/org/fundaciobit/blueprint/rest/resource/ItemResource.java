@@ -1,19 +1,21 @@
-package org.fundaciobit.web.rest;
+package org.fundaciobit.blueprint.rest.resource;
 
 import org.fundaciobit.blueprint.ejb.jpa.Item;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.List;
 
-@Path("item")
+@Path("/item")
 public class ItemResource {
 
     @EJB
@@ -36,6 +38,13 @@ public class ItemResource {
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response create(Item item) {
+        itemService.create(item);
+        return Response.created(URI.create(""+ item.getId())).build();
     }
 
 }

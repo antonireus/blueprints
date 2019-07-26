@@ -27,6 +27,11 @@
         </dependency>
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
+            <artifactId>blueprint-rest</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.fundaciobit.blueprint</groupId>
             <artifactId>blueprint-web</artifactId>
             <type>war</type>
         </dependency>
@@ -50,6 +55,11 @@
                             <groupId>org.fundaciobit.blueprint</groupId>
                             <artifactId>blueprint-ejb</artifactId>
                         </ejbModule>
+                        <webModule>
+                            <groupId>org.fundaciobit.blueprint</groupId>
+                            <artifactId>blueprint-rest</artifactId>
+                            <contextRoot>blueprintrest</contextRoot>
+                        </webModule>
                         <webModule>
                             <groupId>org.fundaciobit.blueprint</groupId>
                             <artifactId>blueprint-web</artifactId>

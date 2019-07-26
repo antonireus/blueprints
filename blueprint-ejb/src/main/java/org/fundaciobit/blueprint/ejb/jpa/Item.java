@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 @Table(name = "BLP_ITEM", indexes =
    @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)
 )
-@XmlRootElement
+@XmlRootElement(name = "item", namespace = "org.fundaciobit.blueprint")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Item implements Serializable {
 
@@ -48,6 +48,7 @@ public class Item implements Serializable {
    @Column(name = "CREATION", nullable = false)
    private Timestamp creation;
 
+   @XmlElement(nillable = true)
    public Long getId() {
       return id;
    }
@@ -56,6 +57,7 @@ public class Item implements Serializable {
       this.id = id;
    }
 
+   @XmlElement(required = true)
    public String getName() {
       return name;
    }
@@ -64,7 +66,7 @@ public class Item implements Serializable {
       this.name = name;
    }
 
-   @XmlElement(type = java.util.Date.class)
+   @XmlElement(nillable = true, type = java.util.Date.class)
    public Timestamp getCreation() {
       return creation;
    }

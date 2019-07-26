@@ -1,0 +1,19 @@
+{
+  "resourcePackages": [
+    "org.fundaciobit.blueprint.rest.resource"
+  ],
+  "prettyPrint": true,
+  "openAPI": {
+    "info": {
+      "version": "${project.version}",
+      "title": "Blueprint REST",
+      "description": "Interfície Swagger pels serveis REST de Blueprint",
+      "contact": {
+        "email": "areus@fundaciobit.org"
+      }
+    },
+    "servers": [
+      { "url": "/blueprintrest" }
+    ]
+  }
+}
