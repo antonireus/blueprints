@@ -29,7 +29,7 @@ import java.sql.Timestamp;
    @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)
 )
 @XmlRootElement(name = "item", namespace = "org.fundaciobit.blueprint")
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Item implements Serializable {
 
    private static final long serialVersionUID = 1L;
@@ -40,15 +40,17 @@ public class Item implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item-sequence")
    @Column(name="ITEMID",nullable = false,length = 19)
+   @XmlElement(nillable = true)
    private Long id;
 
    @Column(name = "NAME", nullable = false, length = 1000)
+   @XmlElement(required = true)
    private String name;
 
    @Column(name = "CREATION", nullable = false)
+   @XmlElement(nillable = true, type = java.util.Date.class)
    private Timestamp creation;
 
-   @XmlElement(nillable = true)
    public Long getId() {
       return id;
    }
@@ -57,7 +59,6 @@ public class Item implements Serializable {
       this.id = id;
    }
 
-   @XmlElement(required = true)
    public String getName() {
       return name;
    }
@@ -66,7 +67,6 @@ public class Item implements Serializable {
       this.name = name;
    }
 
-   @XmlElement(nillable = true, type = java.util.Date.class)
    public Timestamp getCreation() {
       return creation;
    }

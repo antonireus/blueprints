@@ -44,7 +44,7 @@ public class ItemResource {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(Item item) {
         itemService.create(item);
-        return Response.created(URI.create(""+ item.getId())).build();
+        return Response.created(URI.create("item/"+ item.getId())).build();
     }
 
 }
