@@ -4,6 +4,7 @@ import org.fundaciobit.blueprint.ejb.jpa.Item;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 
 import javax.ejb.EJB;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -42,7 +43,7 @@ public class ItemResource {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Item item) {
+    public Response create(@Valid Item item) {
         itemService.create(item);
         return Response.created(URI.create("item/"+ item.getId())).build();
     }

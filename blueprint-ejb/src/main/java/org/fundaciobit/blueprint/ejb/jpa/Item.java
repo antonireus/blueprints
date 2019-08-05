@@ -1,5 +1,7 @@
 package org.fundaciobit.blueprint.ejb.jpa;
 
+import org.fundaciobit.blueprint.common.constraint.NIF;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -43,9 +46,15 @@ public class Item implements Serializable {
    @XmlElement(required = true, nillable = true)
    private Long id;
 
-   @Column(name = "NAME", nullable = false, length = 1000)
+   @Column(name = "NAME", nullable = false, length = 50)
+   @Size(min = 3, max= 50)
    @XmlElement(required = true)
    private String name;
+
+   @Column(name = "NIF", nullable = false, length = 9)
+   @NIF
+   @XmlElement(required = true)
+   private String nif;
 
    @Column(name = "CREATION", nullable = false)
    @XmlElement(required = true, nillable = true)
@@ -65,6 +74,14 @@ public class Item implements Serializable {
 
    public void setName(String name) {
       this.name = name;
+   }
+
+   public String getNif() {
+      return nif;
+   }
+
+   public void setNif(String nif) {
+      this.nif = nif;
    }
 
    public Date getCreation() {
