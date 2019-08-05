@@ -29,7 +29,7 @@ public class BlueprintApplication extends Application {
             new JaxrsOpenApiContextBuilder()
                     .servletConfig(servletConfig)
                     .application(this)
-                    .configLocation("/WEB-INF/openapi-configuration.json")
+                    .configLocation("openapi-configuration.json")
                     .buildContext(true);
         } catch (OpenApiConfigurationException e) {
             logger.severe("Error inicialitzant OpenApi " + e.getMessage());
