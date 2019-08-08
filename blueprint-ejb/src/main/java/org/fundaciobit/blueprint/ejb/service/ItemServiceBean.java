@@ -23,7 +23,6 @@ public class ItemServiceBean extends AbstractJpaDAO<Long, Item> implements ItemS
 
    @Override
    public List<Item> findByNIFs(List<@NIF String> nifs) {
-      //entityManager.createQuery("select i from Item i where i.nif in ")
       CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
       CriteriaQuery<Item> query = criteriaBuilder.createQuery(Item.class);
       Root<Item> item = query.from(Item.class);

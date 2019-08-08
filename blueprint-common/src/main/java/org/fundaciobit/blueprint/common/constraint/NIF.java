@@ -29,7 +29,7 @@ public @interface NIF {
     Class<? extends Payload>[] payload() default {};
 
     /**
-     * Permetre emprar {@link NIF} a llistes d'elements.
+     * Permetre emprar {@link NIF} varies vegades.
      * @see NIF
      */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })

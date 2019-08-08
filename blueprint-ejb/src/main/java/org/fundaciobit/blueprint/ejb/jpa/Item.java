@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -29,8 +32,11 @@ import java.util.Date;
  */
 @Entity
 @SequenceGenerator(name="item-sequence", sequenceName = "BLP_ITEM_SEQ", allocationSize = 1)
-@Table(name = "BLP_ITEM", indexes =
-   @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)
+@Table(name = "BLP_ITEM",
+        indexes =
+            @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true),
+        uniqueConstraints =
+            @UniqueConstraint(name= "BLP_ITEM_NIF_UK", columnNames = "NIF")
 )
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -43,7 +49,7 @@ public class Item implements Serializable {
 
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item-sequence")
-   @Column(name="ITEMID",nullable = false,length = 19)
+   @Column(name="ITEMID", nullable = false, length = 19)
    @XmlElement(required = true, nillable = true)
    private Long id;
 
@@ -52,11 +58,12 @@ public class Item implements Serializable {
    @XmlElement(required = true)
    private String name;
 
-   @Column(name = "NIF", length = 9)
-   @NIF
+   @Column(name = "NIF", nullable = false, length = 9)
+   @NotNull @NIF
    @XmlElement(required = true)
    private String nif;
 
+   @Temporal(TemporalType.TIMESTAMP)
    @Column(name = "CREATION", nullable = false)
    @XmlElement(required = true, nillable = true)
    private Date creation;

@@ -3,6 +3,7 @@ package org.fundaciobit.web.servlet;
 import org.fundaciobit.blueprint.ejb.jpa.Item;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
@@ -10,8 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @WebServlet(name = "itemServlet", urlPatterns = "/item")
@@ -21,6 +25,9 @@ public class ItemServlet extends HttpServlet {
 
 	@Inject
     private Logger logger;
+
+	@Resource
+    private Validator validator;
 
     @EJB
     private ItemService itemService;
@@ -37,11 +44,20 @@ public class ItemServlet extends HttpServlet {
         logger.info("doGet");
 
         String name = request.getParameter("name");
+        String nif = request.getParameter("nif");
         if (name != null) {
             Item item = new Item();
             item.setName(name);
-            logger.info("itemService.create: " + name);
-            itemService.create(item);
+            item.setNif(nif);
+            logger.info("itemService.create: " + name + ", " + nif);
+            Set<ConstraintViolation<Item>> violationSet = validator.validate(item);
+            if (violationSet.isEmpty()) {
+                itemService.create(item);
+            } else {
+                for (ConstraintViolation<Item> violation : violationSet) {
+                    logger.warning(violation.getPropertyPath() + ": " + violation.getMessage());
+                }
+            }
         }
 
         logger.info("itemService.findAll");
