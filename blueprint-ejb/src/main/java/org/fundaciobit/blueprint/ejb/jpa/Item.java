@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -47,11 +48,11 @@ public class Item implements Serializable {
    private Long id;
 
    @Column(name = "NAME", nullable = false, length = 50)
-   @Size(min = 3, max= 50)
+   @NotNull @Size(min = 3, max= 50)
    @XmlElement(required = true)
    private String name;
 
-   @Column(name = "NIF", nullable = false, length = 9)
+   @Column(name = "NIF", length = 9)
    @NIF
    @XmlElement(required = true)
    private String nif;

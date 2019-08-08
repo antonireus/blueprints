@@ -1,5 +1,6 @@
 package org.fundaciobit.blueprint.rest.resource;
 
+import org.fundaciobit.blueprint.common.constraint.NIF;
 import org.fundaciobit.blueprint.ejb.jpa.Item;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 
@@ -11,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -27,6 +29,13 @@ public class ItemResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Item> findAll() {
         return itemService.findAll();
+    }
+
+    @GET
+    @Path("byNIFs")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Item> findByNIFs(@QueryParam("nif") List<@NIF String> nifs) {
+        return itemService.findByNIFs(nifs);
     }
 
     @GET
