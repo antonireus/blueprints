@@ -229,7 +229,7 @@
                                 <container>
                                     <containerId>liberty</containerId>
                                     <zipUrlInstaller>
-                                        <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.6/wlp-javaee8-19.0.0.6.zip</url>
+                                        <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.7/wlp-javaee8-19.0.0.7.zip</url>
                                     </zipUrlInstaller>
                                 </container>
                                 <configuration>
