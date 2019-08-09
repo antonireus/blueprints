@@ -4,6 +4,7 @@ import org.fundaciobit.blueprint.common.constraint.NIF;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,12 +32,15 @@ import java.util.Date;
  * mètodes
  */
 @Entity
+@EntityListeners(ItemListener.class)
 @SequenceGenerator(name="item-sequence", sequenceName = "BLP_ITEM_SEQ", allocationSize = 1)
 @Table(name = "BLP_ITEM",
-        indexes =
-            @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true),
-        uniqueConstraints =
+        indexes = {
+              @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true),
+        },
+        uniqueConstraints = {
             @UniqueConstraint(name= "BLP_ITEM_NIF_UK", columnNames = "NIF")
+        }
 )
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)

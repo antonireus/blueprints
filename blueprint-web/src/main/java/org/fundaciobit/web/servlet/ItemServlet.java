@@ -5,6 +5,7 @@ import org.fundaciobit.blueprint.ejb.service.ItemService;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +22,9 @@ import java.util.logging.Logger;
 @WebServlet(name = "itemServlet", urlPatterns = "/item")
 public class ItemServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -7525166929518102623L;
+	 private static final long serialVersionUID = -7525166929518102623L;
 
-	@Inject
+	 @Inject
     private Logger logger;
 
 	@Resource
@@ -52,7 +53,11 @@ public class ItemServlet extends HttpServlet {
             logger.info("itemService.create: " + name + ", " + nif);
             Set<ConstraintViolation<Item>> violationSet = validator.validate(item);
             if (violationSet.isEmpty()) {
-                itemService.create(item);
+                try {
+                    itemService.create(item);
+                } catch (EJBException ejbException) {
+                    logger.severe(ejbException.getMessage());
+                }
             } else {
                 for (ConstraintViolation<Item> violation : violationSet) {
                     logger.warning(violation.getPropertyPath() + ": " + violation.getMessage());
