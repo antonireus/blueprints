@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,6 +42,10 @@ import java.util.Date;
         uniqueConstraints = {
             @UniqueConstraint(name= "BLP_ITEM_NIF_UK", columnNames = "NIF")
         }
+)
+@NamedQuery(
+        name="findByNIF",
+        query="SELECT i FROM Item i WHERE i.nif LIKE :nif"
 )
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)

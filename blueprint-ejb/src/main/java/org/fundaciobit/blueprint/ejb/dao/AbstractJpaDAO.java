@@ -2,6 +2,10 @@ package org.fundaciobit.blueprint.ejb.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -45,8 +49,10 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
 
     @Override
     public List<E> findAll() {
-        return entityManager.createQuery(
-                "select e from " + entityClass.getSimpleName() + " e", entityClass)
-                .getResultList();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
+        Root<E> entity = query.from(entityClass);
+        TypedQuery<E> typedQuery = entityManager.createQuery(query.select(entity));
+        return typedQuery.getResultList();
     }
 }
