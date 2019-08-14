@@ -40,6 +40,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Hauria d'estar dins la dependència anterior ja que pertany a Java EE però no hi és -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>

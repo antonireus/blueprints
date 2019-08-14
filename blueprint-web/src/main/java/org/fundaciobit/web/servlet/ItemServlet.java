@@ -5,7 +5,6 @@ import org.fundaciobit.blueprint.ejb.service.ItemService;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +43,8 @@ public class ItemServlet extends HttpServlet {
 
         logger.info("doGet");
 
+        Set<ConstraintViolation<Item>> constraintViolations = null;
+
         String name = request.getParameter("name");
         String nif = request.getParameter("nif");
         if (name != null) {
@@ -51,15 +52,12 @@ public class ItemServlet extends HttpServlet {
             item.setName(name);
             item.setNif(nif);
             logger.info("itemService.create: " + name + ", " + nif);
-            Set<ConstraintViolation<Item>> violationSet = validator.validate(item);
-            if (violationSet.isEmpty()) {
-                try {
-                    itemService.create(item);
-                } catch (EJBException ejbException) {
-                    logger.severe(ejbException.getMessage());
-                }
+
+            constraintViolations = validator.validate(item);
+            if (constraintViolations.isEmpty()) {
+                itemService.create(item);
             } else {
-                for (ConstraintViolation<Item> violation : violationSet) {
+                for (ConstraintViolation<Item> violation : constraintViolations) {
                     logger.warning(violation.getPropertyPath() + ": " + violation.getMessage());
                 }
             }
@@ -76,6 +74,13 @@ public class ItemServlet extends HttpServlet {
             os.println("<ul>");
             for (Item item : items) {
                 os.println("<li>" + item.getId() + ", " + item.getName() + ", " + item.getCreation() + "</li>");
+            }
+            os.println("</ul>");
+        }
+        if (constraintViolations != null && !constraintViolations.isEmpty()) {
+            os.println("<p>Errors validació</p><ul>");
+            for (ConstraintViolation<Item> violation : constraintViolations) {
+                os.println("<li>" + violation.getPropertyPath() + ": " + violation.getMessage() + "</li>");
             }
             os.println("</ul>");
         }

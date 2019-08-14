@@ -28,8 +28,9 @@ public class ItemListener {
             .getResultList();
 
       if (!result.isEmpty()) {
-         logger.warning("prePersist: " + item.getNif() + " ja existeix");
-         throw new PersistenceException(item.getNif() + " ja existeix");
+         String msg = "prePersist: " + item.getNif() + " ja existeix, ID=" + item.getId();
+         logger.warning(msg);
+         throw new PersistenceException(msg);
       }
    }
 

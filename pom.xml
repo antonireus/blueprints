@@ -172,6 +172,7 @@
                                     <jndiName>jdbc/blueprintDB</jndiName>
                                     <driverClass>org.postgresql.Driver</driverClass>
                                     <url>jdbc:postgresql://localhost:5432/blueprint</url>
+                                    <transactionSupport>LOCAL_TRANSACTION</transactionSupport>
                                     <username>blueprint</username>
                                     <password>blueprint</password>
                                 </datasource>
@@ -207,8 +208,8 @@
                                 <container>
                                     <containerId>glassfish5x</containerId>
                                     <zipUrlInstaller>
-                                        <url>https://download.oracle.com/glassfish/5.0.1/release/glassfish-5.0.1.zip</url>
-                                        <!-- <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/glassfish/glassfish-5.1.0.zip</url> -->
+                                        <!-- <url>https://download.oracle.com/glassfish/5.0.1/release/glassfish-5.0.1.zip</url> -->
+                                        <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/glassfish/glassfish-5.1.0.zip</url>
                                     </zipUrlInstaller>
                                 </container>
                             </configuration>
