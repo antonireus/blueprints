@@ -11,9 +11,9 @@ import javax.ejb.Singleton;
 
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
-@Lock(LockType.WRITE)
 public class CounterServiceSingletonBean extends AbstractJpaDAO<String, Counter> implements CounterService {
 
+    @Lock(LockType.WRITE)
     @Override
     public int incCounter(String key) {
         Counter counter = entityManager.find(Counter.class, key);

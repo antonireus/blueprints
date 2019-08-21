@@ -1,5 +1,7 @@
 package org.fundaciobit.blueprint.ejb.dao;
 
+import org.fundaciobit.blueprint.common.interceptor.Logged;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -9,12 +11,13 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+@Logged
 public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
 
     @PersistenceContext
     protected EntityManager entityManager;
 
-    protected Class<E> entityClass;
+    private Class<E> entityClass;
 
     protected AbstractJpaDAO() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();

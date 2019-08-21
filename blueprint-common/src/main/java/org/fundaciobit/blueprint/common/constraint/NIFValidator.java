@@ -4,12 +4,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validador de NIF
+ * Validador de NIF. Valida que siguin 8 nombres seguits de la lletra de control correcte.
  */
 public class NIFValidator implements ConstraintValidator<NIF, String> {
 
     /** Lletres del NIF */
-    static final char[] LLETRES = {
+    private static final char[] LLETRES = {
             'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D',
             'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L',
             'C', 'K', 'E'};
@@ -30,8 +30,9 @@ public class NIFValidator implements ConstraintValidator<NIF, String> {
                 return false;
             }
         }
-        int numero = Integer.valueOf(value.substring(0, 8));
-        return Character.toUpperCase(value.charAt(8)) == LLETRES[ numero % 23];
+        /* la posició de la lletra és mòdul 23 de la representció del número */
+        int indexLletra = Integer.valueOf(value.substring(0, 8)) % LLETRES.length;
+        return Character.toUpperCase(value.charAt(8)) == LLETRES[indexLletra];
     }
 
     @Override
