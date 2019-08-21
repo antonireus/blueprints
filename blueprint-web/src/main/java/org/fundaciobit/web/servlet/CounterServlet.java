@@ -21,7 +21,7 @@ public class CounterServlet extends HttpServlet {
     @Inject
     private Logger logger;
 
-    @EJB
+    @EJB(beanName = "CounterServiceSingletonBean")
     private CounterService counterService;
 
     private  static final String COUNTER_ATTRIBUTE = "COUNTER_KEY";

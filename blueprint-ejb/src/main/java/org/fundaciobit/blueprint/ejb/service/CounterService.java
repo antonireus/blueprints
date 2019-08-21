@@ -8,5 +8,10 @@ import javax.ejb.Local;
 @Local
 public interface CounterService extends DAO<String, Counter> {
 
+    /**
+     * Incrementa el comptador amb la clau indicada en una unitat
+     * @param key clau del comptador
+     * @return el nou valor del comptador
+     */
     int incCounter(String key);
 }

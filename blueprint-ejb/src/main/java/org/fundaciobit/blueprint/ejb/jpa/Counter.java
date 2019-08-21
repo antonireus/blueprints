@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- *
+ * Entitat per representar un contador: una clau i un nombre.
  */
 @Entity
 @Table(name = "BLP_COUNTER", indexes =
@@ -49,6 +49,10 @@ public class Counter implements Serializable {
       this.value = value;
    }
 
+   /**
+    * Incrementa el comptador amb una unitat
+    * @return el nou valor del comptador
+    */
    public int incValue() {
       return ++value;
    }

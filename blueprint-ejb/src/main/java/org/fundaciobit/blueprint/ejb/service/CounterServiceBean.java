@@ -11,10 +11,6 @@ public class CounterServiceBean extends AbstractJpaDAO<String, Counter> implemen
 
     @Override
     public int incCounter(String key) {
-        /*entityManager.createNamedQuery("updateCounter")
-                .setParameter("key", key)
-                .executeUpdate();
-        return findById(key).getValue();*/
         Counter counter = entityManager.find(Counter.class, key, LockModeType.PESSIMISTIC_WRITE);
         return counter.incValue();
     }

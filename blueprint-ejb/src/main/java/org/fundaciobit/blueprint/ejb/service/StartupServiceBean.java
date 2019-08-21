@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 @Singleton
 @Startup
-public class StartupService {
+public class StartupServiceBean {
 
    @Inject
    private Logger logger;

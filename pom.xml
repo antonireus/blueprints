@@ -241,6 +241,7 @@
                                                 <user>blueprint</user>
                                                 <password>blueprint</password>
                                             </connectionProperties>
+                                            <transactionSupport>NO_TRANSACTION</transactionSupport>
                                         </datasource>
                                     </datasources>
                                     <properties>
