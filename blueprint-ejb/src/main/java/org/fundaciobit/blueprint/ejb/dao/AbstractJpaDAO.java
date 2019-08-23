@@ -17,10 +17,14 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
     @PersistenceContext
     protected EntityManager entityManager;
 
-    private Class<E> entityClass;
+    private final Class<E> entityClass;
 
     protected AbstractJpaDAO() {
-        ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        Class<?> clazz = getClass();
+        while (!clazz.getSuperclass().equals(AbstractJpaDAO.class)) {
+            clazz = clazz.getSuperclass();
+        }
+        ParameterizedType genericSuperclass = (ParameterizedType) clazz.getGenericSuperclass();
         this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
     }
 

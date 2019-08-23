@@ -2,7 +2,6 @@ package org.fundaciobit.blueprint.ejb.jpa;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.PrePersist;
@@ -23,12 +22,12 @@ public class ItemListener {
       // Sempre guardam el NIF amb la lletra majuscula
       item.setNif(item.getNif().toUpperCase());
 
-      List result = entityManager.createNamedQuery("findByNIF", Item.class)
+      List<Item> result = entityManager.createNamedQuery("findByNIF", Item.class)
             .setParameter("nif", item.getNif())
             .getResultList();
 
       if (!result.isEmpty()) {
-         String msg = "prePersist: " + item.getNif() + " ja existeix, ID=" + item.getId();
+         String msg = "prePersist: " + item.getNif() + " ja existeix, ID=" + result.get(0).getId();
          logger.warning(msg);
          throw new PersistenceException(msg);
       }

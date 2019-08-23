@@ -26,7 +26,7 @@ public class BlueprintApplication extends Application {
     public void init() {
         logger.info("Init REST Application");
         try {
-            new JaxrsOpenApiContextBuilder()
+            new JaxrsOpenApiContextBuilder<>()
                     .servletConfig(servletConfig)
                     .application(this)
                     .configLocation("openapi-configuration.json")

@@ -8,4 +8,8 @@ http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd" bean-discovery-mode="all" vers
         <class>org.fundaciobit.blueprint.common.interceptor.LoggerInterceptor</class>
     </interceptors>
 
+    <decorators>
+        <class>org.fundaciobit.blueprint.ejb.decorator.EventDecoratorDAO</class>
+    </decorators>
+
 </beans>

@@ -18,7 +18,9 @@ import java.util.logging.Logger;
 @WebServlet(name="counterServlet", urlPatterns="/counter")
 public class CounterServlet extends HttpServlet {
 
-    @Inject
+	private static final long serialVersionUID = 4433545994404713280L;
+
+	@Inject
     private Logger logger;
 
     @EJB(beanName = "CounterServiceSingletonBean")
