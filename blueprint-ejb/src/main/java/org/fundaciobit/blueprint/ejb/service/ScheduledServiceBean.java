@@ -29,7 +29,7 @@ public class ScheduledServiceBean {
          @Schedule(second = "*/10", minute = "*", hour = "*", dayOfWeek = "Mon-Fri", persistent = false),
          @Schedule(second = "*/20", minute = "*", hour = "*", dayOfWeek = "Sat-Sun", persistent = false, info="capdesetmana")
    })
-   protected void executeEvery10or20Seconds(Timer timer) {
+   protected void scheduledTask(Timer timer) {
       if (timer.getInfo() != null) {
          logger.info("20 seconds!");
       } else {
