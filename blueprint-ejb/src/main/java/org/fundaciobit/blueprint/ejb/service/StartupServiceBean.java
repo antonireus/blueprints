@@ -20,12 +20,14 @@ public class StartupServiceBean {
    private Logger logger;
 
    @PostConstruct
-   public void init() {
+   protected void init() {
+      //TODO aquí es podria comprovar la taula de base de dades de configuració, i comprovar
+      // que tots els paràmetres hi són, o crear valors per defecte pels que no hi siguin
       logger.info("startup!");
    }
 
    @PreDestroy
-   public void destroy() {
+   protected void destroy() {
       logger.info("shutdown!");
    }
 }
