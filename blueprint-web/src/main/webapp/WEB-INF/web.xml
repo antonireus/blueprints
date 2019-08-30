@@ -9,4 +9,23 @@
         <location>/WEB-INF/jsp/defaultErrorPage.jsp</location>
     </error-page>
 
+    <jsp-config>
+        <jsp-property-group>
+            <description>Opcions per defecte de tots els JSP</description>
+            <url-pattern>*.jsp</url-pattern>
+            <el-ignored>false</el-ignored>
+            <page-encoding>UTF-8</page-encoding>
+            <scripting-invalid>false</scripting-invalid>
+            <is-xml>false</is-xml>
+            <!--
+            <include-prelude></include-prelude>
+            <include-coda></include-coda>
+            -->
+            <deferred-syntax-allowed-as-literal>false</deferred-syntax-allowed-as-literal>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+            <default-content-type>text/html; charset=UTF-8</default-content-type>
+            <buffer>16kb</buffer>
+            <error-on-undeclared-namespace>true</error-on-undeclared-namespace>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

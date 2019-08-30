@@ -6,6 +6,7 @@ import org.fundaciobit.blueprint.ejb.service.ItemService;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,52 +40,31 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws ServletException, IOException {
 
         logger.info("doGet");
+        request.setAttribute("items", itemService.findAll());
 
-        Set<ConstraintViolation<Item>> constraintViolations = null;
+        request.getRequestDispatcher("/item/index.jsp").forward(request, response);
+    }
 
-        String name = request.getParameter("name");
-        String nif = request.getParameter("nif");
-        if (name != null) {
-            Item item = new Item();
-            item.setName(name);
-            item.setNif(nif);
-            logger.info("itemService.create: " + name + ", " + nif);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-            constraintViolations = validator.validate(item);
-            if (constraintViolations.isEmpty()) {
-                itemService.create(item);
-            } else {
-                for (ConstraintViolation<Item> violation : constraintViolations) {
-                    logger.warning(violation.getPropertyPath() + ": " + violation.getMessage());
-                }
-            }
-        }
+        logger.info("doPost");
 
-        logger.info("itemService.findAll");
-        List<Item> items = itemService.findAll();
+        Item item = new Item();
+        item.setName(request.getParameter("name"));
+        item.setNif(request.getParameter("nif"));
+        logger.info("itemService.create: " + item.getName() + ", " + item.getNif());
 
-        ServletOutputStream os = response.getOutputStream();
-        os.println("<html><head><title>Items</title></head><body>");
-        if (items.isEmpty()) {
-            os.println("Buid. Afegeix el paràmetre 'name' per crear un item.");
+        Set<ConstraintViolation<Item>> constraintViolations = validator.validate(item);
+        if (constraintViolations.isEmpty()) {
+            itemService.create(item);
         } else {
-            os.println("<ul>");
-            for (Item item : items) {
-                os.println("<li>" + item.getId() + ", " + item.getName() + ", " + item.getCreation() + "</li>");
-            }
-            os.println("</ul>");
-        }
-        if (constraintViolations != null && !constraintViolations.isEmpty()) {
-            os.println("<p>Errors validació</p><ul>");
-            for (ConstraintViolation<Item> violation : constraintViolations) {
-                os.println("<li>" + violation.getPropertyPath() + ": " + violation.getMessage() + "</li>");
-            }
-            os.println("</ul>");
+            request.getSession().setAttribute("item_constraintViolations", constraintViolations);
         }
 
-        os.println("</body></html>");
+        response.sendRedirect(request.getContextPath() + "/item");
     }
 }

@@ -26,6 +26,7 @@ public class ItemListener {
             .setParameter("nif", item.getNif())
             .getResultList();
 
+      // TODO no funciona amb EclipseLink que crida el mètode després de fer l'INSERT
       if (!result.isEmpty()) {
          String msg = "prePersist: " + item.getNif() + " ja existeix, ID=" + result.get(0).getId();
          logger.warning(msg);
