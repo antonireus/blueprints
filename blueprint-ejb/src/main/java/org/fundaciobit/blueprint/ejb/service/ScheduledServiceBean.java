@@ -21,19 +21,15 @@ public class ScheduledServiceBean {
    private Logger logger;
 
    /**
-    * El mètode s'executa cada 10 segons normalment, cada 20 en cap de setmana.
+    * El mètode s'executa cada minut normalment, cada 2 minuts en cap de setmana.
     * Persistent a false indica que si el servidor s'atura no fa falta
     * recuperar les cridades planificades que s'han perdut.
     */
    @Schedules({
-         @Schedule(second = "*/10", minute = "*", hour = "*", dayOfWeek = "Mon-Fri", persistent = false),
-         @Schedule(second = "*/20", minute = "*", hour = "*", dayOfWeek = "Sat-Sun", persistent = false, info="capdesetmana")
+         @Schedule(minute = "*/1", hour = "*", dayOfWeek = "Mon-Fri", persistent = false, info = "entresetmana"),
+         @Schedule(minute = "*/2", hour = "*", dayOfWeek = "Sat-Sun", persistent = false, info = "capdesetmana")
    })
    protected void scheduledTask(Timer timer) {
-      if (timer.getInfo() != null) {
-         logger.info("20 seconds!");
-      } else {
-         logger.info("10 seconds!");
-      }
+      logger.info("scheduledTask: " + timer.getInfo());
    }
 }

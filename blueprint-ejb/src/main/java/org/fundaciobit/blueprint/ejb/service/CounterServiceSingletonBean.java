@@ -9,6 +9,11 @@ import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Singleton;
 
+/**
+ * Feim servir un singleton per incrementar el contador evitant concurrència. A diferència de la solució amb un
+ * lock JPA de base de dades, aquesta solució només es podria emprar si no hi ha altres aplicacions o components
+ * atacant la mateixa taula de base de dades.
+ */
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class CounterServiceSingletonBean extends AbstractJpaDAO<String, Counter> implements CounterService {

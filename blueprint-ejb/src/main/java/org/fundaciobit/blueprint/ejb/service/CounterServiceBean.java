@@ -6,6 +6,9 @@ import org.fundaciobit.blueprint.ejb.jpa.Counter;
 import javax.ejb.Stateless;
 import javax.persistence.LockModeType;
 
+/**
+ * Feim servir un lock a nivell de base de dades per incrementar el contador evitant concurrència
+ */
 @Stateless
 public class CounterServiceBean extends AbstractJpaDAO<String, Counter> implements CounterService {
 
