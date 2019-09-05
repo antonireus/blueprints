@@ -13,7 +13,6 @@
         <module>blueprint-ejb</module>
         <module>blueprint-web</module>
         <module>blueprint-ear</module>
-        <module>blueprint-rest</module>
     </modules>
 
     <properties>
@@ -44,13 +43,6 @@
                 <artifactId>blueprint-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.fundaciobit.blueprint</groupId>
-                <artifactId>blueprint-rest</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
             </dependency>
 
             <dependency>
@@ -196,6 +188,23 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>apirest</id>
+            <modules>
+                <module>blueprint-rest</module>
+            </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.fundaciobit.blueprint</groupId>
+                        <artifactId>blueprint-rest</artifactId>
+                        <version>${project.version}</version>
+                        <type>war</type>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+
         <profile>
             <id>glassfish</id>
             <build>
