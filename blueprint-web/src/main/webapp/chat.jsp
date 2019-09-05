@@ -25,6 +25,7 @@
                 log.innerHTML += message.from + " : " + message.content + "\n";
                 */
                 log.innerHTML += "bot: " + event.data + "\n";
+                log.scrollTop = log.scrollHeight;
             };
         }
 

@@ -6,6 +6,7 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -16,17 +17,21 @@ public class ChatEndpoint {
    @Inject
    private Logger logger;
 
+   private int nombreMissatges = 0;
+
    @OnOpen
-   public void onOpen(Session session) throws IOException {
-      logger.info("Open");
-      // Get session and WebSocket connection
+   public void onOpen(Session session, @PathParam("username") String username) throws IOException {
+      logger.info("Open " + username);
+      // Temps màxim sense enviar res, 60 segons.
+      session.setMaxIdleTimeout(60_000L);
+      session.getBasicRemote().sendText("Benvingut " + username);
    }
 
    @OnMessage
    public void onMessage(Session session, String message) throws IOException {
+      nombreMissatges++;
       logger.info("Message: " + message);
-      session.getBasicRemote().sendText("Rebut " + message);
-      // Handle new messages
+      session.getBasicRemote().sendText("Rebut missatge número " + nombreMissatges + ": [" + message + "]");
    }
 
    @OnClose
