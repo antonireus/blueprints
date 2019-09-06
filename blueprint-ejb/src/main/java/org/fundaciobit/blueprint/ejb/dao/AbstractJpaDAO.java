@@ -19,7 +19,8 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
 
     private final Class<E> entityClass;
 
-    protected AbstractJpaDAO() {
+    @SuppressWarnings("unchecked")
+	protected AbstractJpaDAO() {
         Class<?> clazz = getClass();
         while (!clazz.getSuperclass().equals(AbstractJpaDAO.class)) {
             clazz = clazz.getSuperclass();
