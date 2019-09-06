@@ -1,5 +1,6 @@
 package org.fundaciobit.web.servlet;
 
+import java.io.IOException;
 import org.fundaciobit.blueprint.ejb.jpa.Item;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 
