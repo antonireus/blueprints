@@ -41,7 +41,7 @@ public class CounterServlet extends HttpServlet {
         Counter counter = counterService.findById(COUNTER_ATTRIBUTE);
         if (counter == null) {
             counter = new Counter();
-            counter.setKey(COUNTER_ATTRIBUTE);
+            counter.setId(COUNTER_ATTRIBUTE);
             counterService.create(counter);
         }
     }

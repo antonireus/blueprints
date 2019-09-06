@@ -13,11 +13,11 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "BLP_COUNTER", indexes =
-   @Index(name = "BLP_COUNTER_PK_I", columnList = "KEY", unique = true)
+   @Index(name = "BLP_COUNTER_PK_I", columnList = "ID", unique = true)
 )
 @NamedQuery(
         name="updateCounter",
-        query="UPDATE Counter c SET c.value = c.value + 1 WHERE c.key = :key"
+        query="UPDATE Counter c SET c.counterValue = c.counterValue + 1 WHERE c.id = :id"
 )
 public class Counter implements Serializable {
 
@@ -27,26 +27,26 @@ public class Counter implements Serializable {
    }
 
    @Id
-   @Column(name="KEY", nullable = false, length = 100)
-   private String key;
+   @Column(name="ID", nullable = false, length = 100)
+   private String id;
 
-   @Column(name="VALUE", nullable = false)
-   private int value;
+   @Column(name="COUNTERVALUE", nullable = false)
+   private int counterValue;
 
-   public String getKey() {
-      return key;
+   public String getId() {
+      return id;
    }
 
-   public void setKey(String key) {
-      this.key = key;
+   public void setId(String id) {
+      this.id = id;
    }
 
-   public int getValue() {
-      return value;
+   public int getCounterValue() {
+      return counterValue;
    }
 
-   public void setValue(int value) {
-      this.value = value;
+   public void setCounterValue(int counterValue) {
+      this.counterValue = counterValue;
    }
 
    /**
@@ -54,6 +54,6 @@ public class Counter implements Serializable {
     * @return el nou valor del comptador
     */
    public int incValue() {
-      return ++value;
+      return ++counterValue;
    }
 }

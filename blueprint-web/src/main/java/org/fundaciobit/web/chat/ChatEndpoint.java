@@ -20,14 +20,14 @@ public class ChatEndpoint {
    @Inject
    private Logger logger;
 
-   private static ConcurrentMap<String, Session> userSessionMap = new ConcurrentHashMap<>();
+   private static final ConcurrentMap<String, Session> USER_SESSION_MAP = new ConcurrentHashMap<>();
 
    private int nombreMissatges = 0;
 
    @OnOpen
    public void onOpen(Session session, @PathParam("username") String username) throws IOException {
       logger.info("Open " + username);
-      Session existingSession = userSessionMap.putIfAbsent(username, session);
+      Session existingSession = USER_SESSION_MAP.putIfAbsent(username, session);
       if (existingSession != null) {
          session.close(
                  new CloseReason(CloseReason.CloseCodes.VIOLATED_POLICY,
@@ -50,7 +50,7 @@ public class ChatEndpoint {
    @OnClose
    public void onClose(Session session, @PathParam("username") String username) throws IOException {
       logger.info("Close " + username);
-      userSessionMap.remove(username);
+      USER_SESSION_MAP.remove(username);
    }
 
    @OnError

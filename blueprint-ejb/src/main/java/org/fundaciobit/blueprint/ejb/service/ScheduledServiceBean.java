@@ -22,8 +22,9 @@ public class ScheduledServiceBean {
 
    /**
     * El mètode s'executa cada minut normalment, cada 2 minuts en cap de setmana.
-    * Persistent a false indica que si el servidor s'atura no fa falta
-    * recuperar les cridades planificades que s'han perdut.
+    * Persistent a false indica que si el servidor s'atura no fa falta recuperar 
+    * les cridades planificades que s'han perdut.
+    * @param timer
     */
    @Schedules({
          @Schedule(minute = "*/1", hour = "*", dayOfWeek = "Mon-Fri", persistent = false, info = "entresetmana"),

@@ -15,6 +15,10 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Anotació per definir que un camp s'ha de validar com un NIF
+ * @author areus
+ */
 @Documented
 @Constraint(validatedBy = NIFValidator.class)
 @Repeatable(NIF.List.class)

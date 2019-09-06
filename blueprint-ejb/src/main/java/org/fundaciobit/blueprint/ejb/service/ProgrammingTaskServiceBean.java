@@ -49,9 +49,7 @@ public class ProgrammingTaskServiceBean {
    @PreDestroy
    protected void destroy() {
       logger.info("deprogramming tasks!");
-      for (Timer timer: timerService.getTimers()) {
-         timer.cancel();
-      }
+      timerService.getTimers().forEach((timer) -> timer.cancel());
    }
 
    @Timeout
