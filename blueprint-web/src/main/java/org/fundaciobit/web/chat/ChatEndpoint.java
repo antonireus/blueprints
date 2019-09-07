@@ -2,6 +2,7 @@ package org.fundaciobit.web.chat;
 
 import javax.inject.Inject;
 import javax.websocket.CloseReason;
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -12,9 +13,12 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@ServerEndpoint(value = "/chat/{username}")
+@ServerEndpoint(value = "/chat/{username}",
+        encoders = JsonChatMessageEncoderDecoder.class,
+        decoders = JsonChatMessageEncoderDecoder.class)
 public class ChatEndpoint {
 
    @Inject
@@ -25,8 +29,9 @@ public class ChatEndpoint {
    private int nombreMissatges = 0;
 
    @OnOpen
-   public void onOpen(Session session, @PathParam("username") String username) throws IOException {
-      logger.info("Open " + username);
+   public void onOpen(Session session, @PathParam("username") String username)
+           throws EncodeException, IOException {
+       logger.info("Close " + session.getId() + ", " + username);
       Session existingSession = userSessionMap.putIfAbsent(username, session);
       if (existingSession != null) {
          session.close(
@@ -36,28 +41,31 @@ public class ChatEndpoint {
 
       // Temps màxim sense enviar res, 60 segons.
       session.setMaxIdleTimeout(60_000L);
-      session.getBasicRemote().sendText("Benvingut " + username);
+      session.getBasicRemote().sendObject(new ChatMessage("Benvingut " + username));
    }
 
    @OnMessage
-   public void onMessage(Session session, @PathParam("username") String username, String message)
-           throws IOException {
+   public void onMessage(Session session, @PathParam("username") String username, ChatMessage message)
+           throws EncodeException, IOException {
       nombreMissatges++;
-      logger.info("Message from " + username + ": " + message);
-      session.getBasicRemote().sendText("Rebut missatge número " + nombreMissatges + ": [" + message + "]");
+      logger.info("Message on " + session.getId() + " from " + username + ": " + message.getContent());
+      String response = "Rebut missatge número " + nombreMissatges + ": [" + message.getContent() + "]";
+       final ChatMessage responseMessage = new ChatMessage(response);
+       session.getBasicRemote().sendObject(responseMessage);
    }
 
    @OnClose
-   public void onClose(Session session, @PathParam("username") String username) throws IOException {
-      logger.info("Close " + username);
+   public void onClose(Session session, @PathParam("username") String username) {
+      logger.info("Close " + session.getId() + ", " + username);
       userSessionMap.remove(username);
    }
 
    @OnError
-   public void onError(Session session, Throwable throwable) throws IOException {
-      logger.info("Error: " + throwable.getMessage());
+   public void onError(Session session, Throwable throwable) throws EncodeException, IOException {
+      logger.log(Level.SEVERE, "Error on " + session.getId() + ": " + throwable.getMessage(), throwable);
       if (session.isOpen()) {
-         session.getBasicRemote().sendText("Error: " + throwable.getMessage());
+          ChatMessage errorMessage = new ChatMessage("Error: " + throwable.getMessage());
+          session.getBasicRemote().sendObject(errorMessage);
       }
    }
 }
