@@ -29,8 +29,9 @@ public class ChatEndpoint {
    private int nombreMissatges = 0;
 
    @OnOpen
-   public void onOpen(Session session, @PathParam("username") String username) throws IOException {
-      logger.info("Open " + username);
+   public void onOpen(Session session, @PathParam("username") String username)
+           throws EncodeException, IOException {
+      logger.info("Open " + session.getId() + ", " + username);
       Session existingSession = USER_SESSION_MAP.putIfAbsent(username, session);
       if (existingSession != null) {
          session.close(
@@ -54,8 +55,8 @@ public class ChatEndpoint {
    }
 
    @OnClose
-   public void onClose(Session session, @PathParam("username") String username) throws IOException {
-      logger.info("Close " + username);
+   public void onClose(Session session, @PathParam("username") String username) {
+      logger.info("Close " + session.getId() + ", " + username);
       USER_SESSION_MAP.remove(username);
    }
 

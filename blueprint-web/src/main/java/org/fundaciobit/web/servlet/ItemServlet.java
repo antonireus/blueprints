@@ -20,12 +20,12 @@ import java.util.logging.Logger;
 @WebServlet(name = "itemServlet", urlPatterns = "/item")
 public class ItemServlet extends HttpServlet {
 
-	 private static final long serialVersionUID = -7525166929518102623L;
+    private static final long serialVersionUID = -7525166929518102623L;
 
-	 @Inject
+    @Inject
     private Logger logger;
 
-	@Resource
+    @Resource
     private Validator validator;
 
     @EJB
