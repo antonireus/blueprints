@@ -12,19 +12,14 @@
             username = document.getElementById("username").value;
 
             var host = document.location.host;
-            var pathname = "${pageContext.request.contextPath}";
-
-            ws = new WebSocket("ws://" +host  + pathname + "/chat/" + username);
-            //ws = new WebSocket("<c:url value="/chat/" />" + username);
+            ws = new WebSocket("ws://" + host + "${pageContext.request.contextPath}/chat/" + username);
 
             ws.onmessage = function(event) {
                 var log = document.getElementById("log");
                 console.log(event.data);
-                /*
+
                 var message = JSON.parse(event.data);
-                log.innerHTML += message.from + " : " + message.content + "\n";
-                */
-                log.innerHTML += "bot: " + event.data + "\n";
+                log.innerHTML += "bot: " + message.content + "\n";
                 log.scrollTop = log.scrollHeight;
             };
         }
@@ -32,18 +27,16 @@
         function send() {
             var msgElement = document.getElementById("msg");
             var content = msgElement.value;
-            /*
-            var json = JSON.stringify({
-                "content":content
-            });*/
 
-            //ws.send(json);
-            ws.send(content);
+            var json = JSON.stringify({
+                "content": content
+            });
+
+            ws.send(json);
             var log = document.getElementById("log");
             log.innerHTML += username + ": " + content + "\n";
             msgElement.value = "";
         }
-
     </script>
 </head>
 <body>
@@ -56,7 +49,7 @@
     </tr>
     <tr>
         <td>
-            <textarea readonly="true" rows="10" cols="80" id="log"></textarea>
+            <textarea readonly="readonly" rows="10" cols="80" id="log"></textarea>
         </td>
     </tr>
     <tr>

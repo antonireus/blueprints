@@ -8,9 +8,5 @@ target/
 # Fitxers de projecte de IntelliJ IDEA
 *.iml
 .idea/
-/blueprint-ejb/nb-configuration.xml
-/blueprint-rest/nb-configuration.xml
-/nb-configuration.xml
-/blueprint-ear/nb-configuration.xml
-/blueprint-common/nb-configuration.xml
-/blueprint-web/nb-configuration.xml
+# Fitxers de projecte de NetBeans
+nb-configuration.xml

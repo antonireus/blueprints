@@ -93,7 +93,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-ear-plugin</artifactId>
                         <configuration>
-                            <modules>
+                            <modules combine.children="append">
                                 <webModule>
                                     <groupId>org.fundaciobit.blueprint</groupId>
                                     <artifactId>blueprint-rest</artifactId>
