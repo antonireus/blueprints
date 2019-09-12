@@ -34,6 +34,34 @@ public class ItemServlet extends HttpServlet {
     @Override
     public void init() {
         logger.info("init");
+
+        {
+            Item item = new Item();
+            item.setName("Item 1");
+            item.setNif("00000000T");
+            item.getDescription().put("ca", "Desc 1 ca");
+            item.getDescription().put("es", "Desc 1 es");
+            itemService.create(item);
+        }
+
+        {
+            Item item = new Item();
+            item.setName("Item 2");
+            item.setNif("00000001R");
+            item.getDescription().put("ca", "Desc 2 ca");
+            item.getDescription().put("es", "Desc 2 es");
+            itemService.create(item);
+        }
+
+        {
+            Item item = new Item();
+            item.setName("Item 3");
+            item.setNif("00000002W");
+            item.getDescription().put("ca", "Desc 3 ca");
+            item.getDescription().put("es", "Desc 3 es");
+            itemService.create(item);
+        }
+
     }
 
     @Override
@@ -54,6 +82,10 @@ public class ItemServlet extends HttpServlet {
         Item item = new Item();
         item.setName(request.getParameter("name"));
         item.setNif(request.getParameter("nif"));
+
+        item.getDescription().put("ca", request.getParameter("description_ca"));
+        item.getDescription().put("es", request.getParameter("description_es"));
+
         logger.info("itemService.create: " + item.getName() + ", " + item.getNif());
 
         Set<ConstraintViolation<Item>> constraintViolations = validator.validate(item);

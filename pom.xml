@@ -207,6 +207,19 @@
 
         <profile>
             <id>glassfish</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hibernate.validator</groupId>
+                    <artifactId>hibernate-validator-cdi</artifactId>
+                    <version>6.0.10.Final</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.hibernate.validator</groupId>
+                            <artifactId>hibernate-validator</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -220,6 +233,12 @@
                                         <!-- <url>https://download.oracle.com/glassfish/5.0.1/release/glassfish-5.0.1.zip</url> -->
                                         <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/glassfish/glassfish-5.1.0.zip</url>
                                     </zipUrlInstaller>
+                                    <dependencies combine.children="append">
+                                        <dependency>
+                                            <groupId>org.hibernate.validator</groupId>
+                                            <artifactId>hibernate-validator-cdi</artifactId>
+                                        </dependency>
+                                    </dependencies>
                                 </container>
                             </configuration>
                         </plugin>

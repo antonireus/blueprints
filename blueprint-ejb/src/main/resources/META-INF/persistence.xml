@@ -10,8 +10,17 @@
       <properties>
          <!-- Per les propietats estandard veure punt 8.2.1.9 de l'especificació JPA -->
          <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-         <!-- Properties for Hibernate -->
-         <property name="hibernate.show_sql" value="false" />
+         <!--
+         Properties for Hibernate
+         Veure: https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
+         -->
+         <property name="hibernate.show_sql" value="true" />
+         <property name="hibernate.default_batch_fetch_size" value="16" />
+         <!--
+         Properties for EclipseLink
+         Veure: https://www.eclipse.org/eclipselink/documentation/2.7/jpa/extensions/persistenceproperties_ref.htm
+         -->
+         <property name="eclipselink.logging.level" value="FINE" />
       </properties>
    </persistence-unit>
 </persistence>

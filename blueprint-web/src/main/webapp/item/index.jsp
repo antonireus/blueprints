@@ -30,6 +30,12 @@
         <label for="nif">NIF</label>
         <input id="nif" type="text" name="nif" value="${param.nif}"/>
 
+        <label for="description_ca">Description CA</label>
+        <input id="description_ca" type="text" name="description_ca" value="${param.description_ca}"/>
+
+        <label for="description_es">Description ES</label>
+        <input id="description_es" type="text" name="description_es" value="${param.description_es}"/>
+
         <input type="submit" name="submit" value="Enviar" />
     </form>
 
@@ -44,7 +50,9 @@
                     <c:out value="${item.id}" />,
                     <c:out value="${item.name}" />,
                     <c:out value="${item.nif}" />,
-                    <c:out value="${item.creation}" />
+                    <c:out value="${item.creation}" /><br />
+                    <c:out value="${item.description['ca']}" /><br />
+                    <c:out value="${item.description['es']}" />
                 </li>
             </c:forEach>
             </ul>

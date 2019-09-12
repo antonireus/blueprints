@@ -2,19 +2,7 @@ package org.fundaciobit.blueprint.ejb.jpa;
 
 import org.fundaciobit.blueprint.common.constraint.NIF;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,6 +11,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Requisits de les classes persistents:
@@ -46,6 +36,11 @@ import java.util.Date;
 @NamedQuery(
         name="findByNIF",
         query="SELECT i FROM Item i WHERE i.nif LIKE :nif"
+)
+@NamedEntityGraph(
+        name="item_description", attributeNodes = {
+                @NamedAttributeNode(value="description")
+}
 )
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -77,6 +72,13 @@ public class Item implements Serializable {
    @XmlElement(required = true, nillable = true)
    private Date creation;
 
+   @ElementCollection(fetch = FetchType.EAGER)
+   @MapKeyColumn(name="LANG", length = 5)
+   @Column(name="DESCRIPTION", nullable = false, length = 200)
+   @CollectionTable(name="BLP_ITEM_I18N_DESCRIPTION",
+           joinColumns = @JoinColumn(name="ITEM_ITEMID", referencedColumnName = "ITEMID"))
+   private Map<String, String> description = new HashMap<>();
+
    public Long getId() {
       return id;
    }
@@ -107,5 +109,13 @@ public class Item implements Serializable {
 
    public void setCreation(Date creation) {
       this.creation = creation;
+   }
+
+   public Map<String, String> getDescription() {
+      return description;
+   }
+
+   public void setDescription(Map<String, String> description) {
+      this.description = description;
    }
 }

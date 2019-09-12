@@ -31,4 +31,13 @@ public class ItemServiceBean extends AbstractJpaDAO<Long, Item> implements ItemS
       TypedQuery<Item> typedQuery = entityManager.createQuery(query.select(item).where(in));
       return typedQuery.getResultList();
    }
+
+   @Override
+   public List<Item> findAll() {
+      CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+      CriteriaQuery<Item> query = criteriaBuilder.createQuery(Item.class);
+      Root<Item> from = query.from(Item.class);
+      TypedQuery<Item> typedQuery = entityManager.createQuery(query.select(from));
+      return typedQuery.getResultList();
+   }
 }
