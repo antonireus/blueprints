@@ -133,7 +133,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.7.5</version>
+                    <version>1.7.7</version>
                     <configuration><!-- https://codehaus-cargo.github.io/cargo/WildFly+14.x.html -->
                         <container>
                             <containerId>wildfly14x</containerId>
@@ -208,16 +208,16 @@
         <profile>
             <id>glassfish</id>
             <dependencies>
+                <!--
+                Glassfish 5.1 du Hibernate Validator 6.0.10 com a implementació de Bean Valitation.
+                Però el JAR bean-validator-cdi té un error i no exporta correctament els packages.
+                Incloent la llibreria en configurar el servidor es corregeix el problema.
+                -->
                 <dependency>
                     <groupId>org.hibernate.validator</groupId>
                     <artifactId>hibernate-validator-cdi</artifactId>
                     <version>6.0.10.Final</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.hibernate.validator</groupId>
-                            <artifactId>hibernate-validator</artifactId>
-                        </exclusion>
-                    </exclusions>
+                    <scope>provided</scope>
                 </dependency>
             </dependencies>
             <build>
@@ -258,7 +258,7 @@
                                 <container>
                                     <containerId>liberty</containerId>
                                     <zipUrlInstaller>
-                                        <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.7/wlp-javaee8-19.0.0.7.zip</url>
+                                        <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.8/wlp-javaee8-19.0.0.8.zip</url>
                                     </zipUrlInstaller>
                                 </container>
                                 <configuration>
