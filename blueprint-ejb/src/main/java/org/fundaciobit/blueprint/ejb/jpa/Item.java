@@ -76,8 +76,11 @@ public class Item implements Serializable {
    @MapKeyColumn(name="LANG", length = 5)
    @Column(name="DESCRIPTION", nullable = false, length = 200)
    @CollectionTable(name="BLP_ITEM_I18N_DESCRIPTION",
-           joinColumns = @JoinColumn(name="ITEM_ITEMID", referencedColumnName = "ITEMID"))
-   private Map<String, String> description = new HashMap<>();
+           joinColumns = @JoinColumn(name="ITEM_ITEMID", referencedColumnName = "ITEMID",
+                   foreignKey = @ForeignKey(name="BLP_ITEM_I18N_DESCRIPTION_ITEM_FK")),
+           uniqueConstraints = @UniqueConstraint(name = "BLP_ITEM_I18N_DESCRIPTION_UK",
+                   columnNames = {"ITEM_ITEMID", "LANG"}))
+   private Map<String, @NotNull @Size(min = 3, max = 200) String> description = new HashMap<>();
 
    public Long getId() {
       return id;

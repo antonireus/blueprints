@@ -209,9 +209,8 @@
             <id>glassfish</id>
             <dependencies>
                 <!--
-                Glassfish 5.1 du Hibernate Validator 6.0.10 com a implementació de Bean Valitation.
-                Però el JAR bean-validator-cdi té un error i no exporta correctament els packages.
-                Incloent la llibreria en configurar el servidor es corregeix el problema.
+                workaround per bug de Glassfish 5.0.1
+                https://github.com/eclipse-ee4j/glassfish/issues/22712
                 -->
                 <dependency>
                     <groupId>org.hibernate.validator</groupId>
