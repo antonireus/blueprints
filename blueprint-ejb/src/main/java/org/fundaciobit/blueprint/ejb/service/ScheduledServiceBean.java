@@ -4,7 +4,6 @@ import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Stateless;
 import javax.ejb.Timer;
-import javax.inject.Inject;
 import java.util.logging.Logger;
 
 /**
@@ -17,20 +16,19 @@ import java.util.logging.Logger;
 @Stateless
 public class ScheduledServiceBean {
 
-   @Inject
-   private Logger logger;
+   private static final Logger log = Logger.getLogger(ScheduledServiceBean.class.getName());
 
    /**
     * El mètode s'executa cada minut normalment, cada 2 minuts en cap de setmana.
     * Persistent a false indica que si el servidor s'atura no fa falta recuperar 
     * les cridades planificades que s'han perdut.
-    * @param timer
+    * @param timer Timer que ha expirat
     */
    @Schedules({
          @Schedule(minute = "*/1", hour = "*", dayOfWeek = "Mon-Fri", persistent = false, info = "entresetmana"),
          @Schedule(minute = "*/2", hour = "*", dayOfWeek = "Sat-Sun", persistent = false, info = "capdesetmana")
    })
    protected void scheduledTask(Timer timer) {
-      logger.info("scheduledTask: " + timer.getInfo());
+      log.info("scheduledTask: " + timer.getInfo());
    }
 }

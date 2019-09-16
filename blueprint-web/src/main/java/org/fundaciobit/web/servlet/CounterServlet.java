@@ -4,7 +4,6 @@ import org.fundaciobit.blueprint.ejb.jpa.Counter;
 import org.fundaciobit.blueprint.ejb.service.CounterService;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -20,8 +19,7 @@ public class CounterServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 4433545994404713280L;
 
-	@Inject
-    private Logger logger;
+    private static final Logger log = Logger.getLogger(CounterServlet.class.getName());
 
     @EJB(beanName = "CounterServiceSingletonBean")
     private CounterService counterService;
@@ -34,7 +32,7 @@ public class CounterServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        logger.info("init");
+        log.info("init");
         ServletContext context = config.getServletContext();
         context.setAttribute(COUNTER_ATTRIBUTE, new CounterHolder());
 
@@ -48,21 +46,21 @@ public class CounterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("doGet");
+        log.info("doGet");
 
         ServletContext context = request.getServletContext();
 
         int contextCounter;
         int persistenceCounter;
 
-        CounterHolder counter = (CounterHolder) context.getAttribute(COUNTER_ATTRIBUTE);
+        final CounterHolder counter = (CounterHolder) context.getAttribute(COUNTER_ATTRIBUTE);
         synchronized (counter) {
             contextCounter = ++counter.value;
         }
 
         persistenceCounter = counterService.incCounter(COUNTER_ATTRIBUTE);
 
-        logger.info("ContextCounter: " + contextCounter +
+        log.info("ContextCounter: " + contextCounter +
                 ", PersistenceCounter: " + persistenceCounter);
 
         ServletOutputStream os = response.getOutputStream();

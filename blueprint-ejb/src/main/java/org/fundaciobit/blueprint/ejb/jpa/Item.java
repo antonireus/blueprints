@@ -26,12 +26,8 @@ import java.util.Map;
 @EntityListeners(ItemListener.class)
 @SequenceGenerator(name="item-sequence", sequenceName = "BLP_ITEM_SEQ", allocationSize = 1)
 @Table(name = "BLP_ITEM",
-        indexes = {
-              @Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true),
-        },
-        uniqueConstraints = {
-            @UniqueConstraint(name= "BLP_ITEM_NIF_UK", columnNames = "NIF")
-        }
+        indexes = {@Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)},
+        uniqueConstraints = {@UniqueConstraint(name= "BLP_ITEM_NIF_UK", columnNames = "NIF")}
 )
 @NamedQuery(
         name="findByNIF",

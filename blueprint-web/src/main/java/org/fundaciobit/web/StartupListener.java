@@ -1,6 +1,5 @@
 package org.fundaciobit.web;
 
-import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -12,16 +11,15 @@ import java.util.logging.Logger;
 @WebListener
 public class StartupListener implements ServletContextListener {
 
-   @Inject
-   private Logger logger;
+   private static final Logger log = Logger.getLogger(StartupListener.class.getName());
 
    @Override
    public void contextInitialized(ServletContextEvent sce) {
-      logger.info("Context initialized!");
+      log.info("Context initialized!");
    }
 
    @Override
    public void contextDestroyed(ServletContextEvent sce) {
-      logger.info("Context destroyed!");
+      log.info("Context destroyed!");
    }
 }

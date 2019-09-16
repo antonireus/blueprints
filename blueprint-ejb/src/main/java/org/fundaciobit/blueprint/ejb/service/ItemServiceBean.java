@@ -27,17 +27,8 @@ public class ItemServiceBean extends AbstractJpaDAO<Long, Item> implements ItemS
       CriteriaQuery<Item> query = criteriaBuilder.createQuery(Item.class);
       Root<Item> item = query.from(Item.class);
       CriteriaBuilder.In<String> in = criteriaBuilder.in(item.get("nif"));
-      nifs.forEach((nif) -> in.value(nif));
+      nifs.forEach(in::value);
       TypedQuery<Item> typedQuery = entityManager.createQuery(query.select(item).where(in));
-      return typedQuery.getResultList();
-   }
-
-   @Override
-   public List<Item> findAll() {
-      CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-      CriteriaQuery<Item> query = criteriaBuilder.createQuery(Item.class);
-      Root<Item> from = query.from(Item.class);
-      TypedQuery<Item> typedQuery = entityManager.createQuery(query.select(from));
       return typedQuery.getResultList();
    }
 }

@@ -1,4 +1,4 @@
-<%@ page info="Chat" %>
+<%@ page info="Chat" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
@@ -13,6 +13,7 @@
 
             var host = document.location.host;
             ws = new WebSocket("ws://" + host + "${pageContext.request.contextPath}/chat/" + username);
+            console.log("Connecting to: " + ws.url);
 
             ws.onmessage = function(event) {
                 var log = document.getElementById("log");
@@ -21,6 +22,16 @@
                 var message = JSON.parse(event.data);
                 log.innerHTML += "bot: " + message.content + "\n";
                 log.scrollTop = log.scrollHeight;
+            };
+
+            ws.onopen = function(event) {
+                var button = document.getElementById("connectButton");
+                button.disabled = true;
+            };
+
+            ws.onclose = function(event) {
+                var button = document.getElementById("connectButton");
+                button.disabled = false;
             };
         }
 
@@ -44,7 +55,7 @@
     <tr>
         <td colspan="2">
             <input type="text" id="username" placeholder="Username"/>
-            <button type="button" onclick="connect();" >Connect</button>
+            <button type="button" id="connectButton" onclick="connect();" >Connect</button>
         </td>
     </tr>
     <tr>

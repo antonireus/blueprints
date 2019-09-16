@@ -11,7 +11,6 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
-import javax.inject.Inject;
 import java.util.logging.Logger;
 
 @Startup
@@ -19,15 +18,14 @@ import java.util.logging.Logger;
 @DependsOn("StartupServiceBean")
 public class ProgrammingTaskServiceBean {
 
-   @Inject
-   private Logger logger;
+   private static final Logger log = Logger.getLogger(ProgrammingTaskServiceBean.class.getName());
 
    @Resource
    private TimerService timerService;
 
    @PostConstruct
    protected void init() {
-      logger.info("init programming task!");
+      log.info("init programming task!");
 
       // Cream un timer no persistent que s'executa la primera vegada d'aquí 60 segons, i després cada 60 segons.
       TimerConfig config1 = new TimerConfig("cada 60 segons", false);
@@ -48,12 +46,12 @@ public class ProgrammingTaskServiceBean {
     */
    @PreDestroy
    protected void destroy() {
-      logger.info("deprogramming tasks!");
-      timerService.getTimers().forEach((timer) -> timer.cancel());
+      log.info("deprogramming tasks!");
+      timerService.getTimers().forEach(Timer::cancel);
    }
 
    @Timeout
    protected void programmedTask(Timer timer) {
-      logger.info("programmedTask: " + timer.getInfo());
+      log.info("programmedTask: " + timer.getInfo());
    }
 }

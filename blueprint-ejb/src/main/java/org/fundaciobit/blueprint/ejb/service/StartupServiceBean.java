@@ -4,7 +4,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.inject.Inject;
 import java.util.logging.Logger;
 
 /**
@@ -16,18 +15,17 @@ import java.util.logging.Logger;
 @Startup
 public class StartupServiceBean {
 
-   @Inject
-   private Logger logger;
+   private static final Logger log = Logger.getLogger(StartupServiceBean.class.getName());
 
    @PostConstruct
    protected void init() {
       //TODO aquí es podria comprovar la taula de base de dades de configuració, i comprovar
       // que tots els paràmetres hi són, o crear valors per defecte pels que no hi siguin
-      logger.info("startup!");
+      log.info("startup!");
    }
 
    @PreDestroy
    protected void destroy() {
-      logger.info("shutdown!");
+      log.info("shutdown!");
    }
 }

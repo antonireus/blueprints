@@ -12,20 +12,19 @@ import java.util.logging.Logger;
 @Decorator
 public abstract class EventDecoratorDAO<K, E> implements DAO<K, E> {
 
+    private static final Logger log = Logger.getLogger(EventDecoratorDAO.class.getName());
+
     @Inject @Delegate
     private DAO<K, E> delegate;
-
-    @Inject
-    private Logger logger;
 
     @Inject @CreatedEvent
     private Event<Object> createdEvent;
 
     @Override
     public E create(E entity) {
-        logger.info("create");
+        log.info("create");
         final E result = delegate.create(entity);
-        logger.info("fire!");
+        log.info("fire!");
         createdEvent.fire(result);
         return result;
     }
