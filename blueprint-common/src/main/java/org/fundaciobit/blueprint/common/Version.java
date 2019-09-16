@@ -20,6 +20,10 @@ public class Version {
         number = "0.9";
     }
 
+    /**
+     * Obté el nombre de versió
+     * @return Nombre de versió
+     */
     public String getNumber() {
         return number;
     }

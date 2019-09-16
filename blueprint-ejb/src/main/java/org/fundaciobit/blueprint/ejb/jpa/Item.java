@@ -2,7 +2,27 @@ package org.fundaciobit.blueprint.ejb.jpa;
 
 import org.fundaciobit.blueprint.common.constraint.NIF;
 
-import javax.persistence.*;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -44,6 +64,9 @@ public class Item implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
+   /**
+    * Constructor buid.
+    */
    public Item() {
    }
 
@@ -78,42 +101,82 @@ public class Item implements Serializable {
                    columnNames = {"ITEM_ITEMID", "LANG"}))
    private Map<String, @NotNull @Size(min = 3, max = 200) String> description = new HashMap<>();
 
+   /**
+    * Obté l'identificador del item.
+    * @return Identificador del item.
+    */
    public Long getId() {
       return id;
    }
 
+   /**
+    * Fixa l'identificador del item.
+    * @param id Identificador del item.
+    */
    public void setId(Long id) {
       this.id = id;
    }
 
+   /**
+    * Obté el nom del item.
+    * @return Nom del item.
+    */
    public String getName() {
       return name;
    }
 
+   /**
+    * Fixa el nom del item.
+    * @param name Nom del item.
+    */
    public void setName(String name) {
       this.name = name;
    }
 
+   /**
+    * Obté el NIF del item.
+    * @return NIF del item.
+    */
    public String getNif() {
       return nif;
    }
 
+   /**
+    * Fixa el NIF del item.
+    * @param nif NIF del item.
+    */
    public void setNif(String nif) {
       this.nif = nif;
    }
 
+   /**
+    * Obté la data de creació del item. Amb precisió de timestamp.
+    * @return Data de creació del item.
+    */
    public Date getCreation() {
       return creation;
    }
 
+   /**
+    * Fixa la data de creació del item.
+    * @param creation Data de creació del item.
+    */
    public void setCreation(Date creation) {
       this.creation = creation;
    }
 
+   /**
+    * Obté les descripcions del item, indexades per idioma. La clau del map de valors és el codi de l'idioma.
+    * @return descripcions del item indexades per idioma.
+    */
    public Map<String, String> getDescription() {
       return description;
    }
 
+   /**
+    * Fixa les descripcions del item.
+    * @param description Descripcions del item indexades per idioma.
+    */
    public void setDescription(Map<String, String> description) {
       this.description = description;
    }

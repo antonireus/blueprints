@@ -14,6 +14,15 @@ public class NIFValidator implements ConstraintValidator<NIF, String> {
             'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L',
             'C', 'K', 'E'};
 
+    /**
+     * Valida que el camp és un NIF correcte. Valida que sigui un string amb 8
+     * nombres i una lletra, i que la lletra es correspongui amb la definició
+     * de NIF. Si el valor és null retornarà true (De la validació
+     * de null ja s'encarrega la validació @NotNull).
+     * @param value Valor a validar.
+     * @param context context de validació
+     * @return true si és null o és vàlid, false en cas contrari.
+     */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         /* Sempre cal retornar true. D'això s'encarrega el validaor de NotNull */
@@ -35,6 +44,10 @@ public class NIFValidator implements ConstraintValidator<NIF, String> {
         return Character.toUpperCase(value.charAt(8)) == LLETRES[indexLletra];
     }
 
+    /**
+     * Inicialitza el validador.
+     * @param constraintAnnotation l'anotació. 
+     */
     @Override
     public void initialize(NIF constraintAnnotation) {
 

@@ -16,7 +16,7 @@ import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Anotació per definir que un camp s'ha de validar com un NIF
+ * Anotació per definir que un camp s'ha de validar com un NIF.
  * @author areus
  */
 @Documented
@@ -26,10 +26,22 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface NIF {
 
+    /**
+     * Permet definir l'etiqueta del missatge d'error.
+     * @return Etiqueta del missatge d'error
+     */
     String message() default "{org.fundaciobit.blueprint.common.constraint.NIF.message}";
 
+    /**
+     * Permet definir els grups on s'empra la validació.
+     * @return Grups on s'empra la validació
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Permet configurar paràmetres addicionals.
+     * @return paràmetres addicionals
+     */
     Class<? extends Payload>[] payload() default {};
 
     /**
@@ -40,6 +52,10 @@ public @interface NIF {
     @Retention(RUNTIME)
     @Documented
     @interface List {
+        /**
+         * Implementació de la llista de constraints de tipus NIF.
+         * @return llista de constraints del tipus NIF.
+         */
         NIF[] value();
     }
 }

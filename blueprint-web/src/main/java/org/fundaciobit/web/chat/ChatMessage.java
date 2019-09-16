@@ -1,6 +1,9 @@
 package org.fundaciobit.web.chat;
 
-@SuppressWarnings("unused")
+/**
+ * Missatge de chat
+ * @author Antoni
+ */
 public class ChatMessage {
 
     private String content;

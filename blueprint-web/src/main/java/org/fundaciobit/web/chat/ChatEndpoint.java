@@ -20,7 +20,7 @@ import java.util.logging.Logger;
         decoders = JsonChatMessageDecoder.class)
 public class ChatEndpoint {
 
-   private static final Logger log = Logger.getLogger(ChatEndpoint.class.getName());
+   private static final Logger LOG = Logger.getLogger(ChatEndpoint.class.getName());
 
    private static final ConcurrentMap<String, Session> USER_SESSION_MAP = new ConcurrentHashMap<>();
 
@@ -29,7 +29,7 @@ public class ChatEndpoint {
    @OnOpen
    public void onOpen(Session session, @PathParam("username") String username)
            throws EncodeException, IOException {
-      log.info("Open " + session.getId() + ", " + username);
+      LOG.info("Open " + session.getId() + ", " + username);
       Session existingSession = USER_SESSION_MAP.putIfAbsent(username, session);
       if (existingSession != null) {
          session.close(
@@ -46,7 +46,7 @@ public class ChatEndpoint {
    public void onMessage(Session session, @PathParam("username") String username, ChatMessage message)
            throws EncodeException, IOException {
       nombreMissatges++;
-      log.info("Message on " + session.getId() + " from " + username + ": " + message.getContent());
+      LOG.info("Message on " + session.getId() + " from " + username + ": " + message.getContent());
       String response = "Rebut missatge número " + nombreMissatges + ": [" + message.getContent() + "]";
        final ChatMessage responseMessage = new ChatMessage(response);
        session.getBasicRemote().sendObject(responseMessage);
@@ -54,13 +54,13 @@ public class ChatEndpoint {
 
    @OnClose
    public void onClose(Session session, @PathParam("username") String username) {
-      log.info("Close " + session.getId() + ", " + username);
+      LOG.info("Close " + session.getId() + ", " + username);
       USER_SESSION_MAP.remove(username);
    }
 
    @OnError
    public void onError(Session session, Throwable throwable) throws EncodeException, IOException {
-      log.log(Level.SEVERE, "Error on " + session.getId() + ": " + throwable.getMessage(), throwable);
+      LOG.log(Level.SEVERE, "Error on " + session.getId() + ": " + throwable.getMessage(), throwable);
       if (session.isOpen()) {
          // Enviar un missatge amb el message concret de l'error no és lo seu, però per provar.
           ChatMessage errorMessage = new ChatMessage("Error: " + throwable.getMessage());

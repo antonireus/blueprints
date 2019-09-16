@@ -11,16 +11,31 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+/**
+ * Implementació bàsica d'un {@link DAO}.
+ * @author Antoni
+ * @param <K> Tipus de la clau primària de l'entitat.
+ * @param <E> Tipus de l'entitat.
+ */
 @Logged
 public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
 
+    /**
+     * Gestor d'entitats de JPA.
+     */
     @PersistenceContext
     protected EntityManager entityManager;
 
+    /**
+     * Guarda la classe del tipus d'entitat.
+     */
     private final Class<E> entityClass;
 
+    /**
+     * Construtor per defecte. Emmagatzema a {@code entityClass} el tipus d'entitat.
+     */
     @SuppressWarnings("unchecked")
-	protected AbstractJpaDAO() {
+    protected AbstractJpaDAO() {
         Class<?> clazz = getClass();
         while (!clazz.getSuperclass().equals(AbstractJpaDAO.class)) {
             clazz = clazz.getSuperclass();
@@ -29,32 +44,59 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
     }
 
+    /**
+     * Crea una nova entitat.
+     * @param entity Entitat a guardar.
+     * @return l'entitat de guardar-la
+     */
     @Override
     public E create(E entity) {
         entityManager.persist(entity);
         return entity;
     }
 
+    /**
+     * Actualitza una entitat.
+     * @param entity Entitat a actualitzar.
+     * @return l'entitat actualitzada.
+     */
     @Override
     public E update(E entity) {
         return entityManager.merge(entity);
     }
 
+    /**
+     * Esborra una entitat.
+     * @param entity l'entitat a esborrar.
+     */
     @Override
     public void delete(E entity) {
         entityManager.remove(entity);
     }
 
+    /**
+     * Esborra una entitat pel seu identificador.
+     * @param id Identificador de l'entitat a esborrar.
+     */
     @Override
     public void deleteById(K id) {
         delete(findById(id));
     }
 
+    /**
+     * Carrega una entitat pel seu identificador.
+     * @param id Identificador de l'entitat a carregar.
+     * @return l'entitat que es correspon a l'identificador o null si no existeix.
+     */
     @Override
     public E findById(K id) {
         return entityManager.find(entityClass, id);
     }
 
+    /**
+     * Carrega totes les entitats.
+     * @return llista de totes les entitats.
+     */
     @Override
     public List<E> findAll() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
