@@ -15,12 +15,9 @@
     <name>blueprint: EJB Module</name>
 
     <dependencies>
-
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -28,7 +25,6 @@
             <artifactId>blueprint-common</artifactId>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
     <build>
