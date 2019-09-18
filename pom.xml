@@ -66,6 +66,7 @@
                 <type>war</type>
             </dependency>
 
+            <!-- DEPENDÈNCIES DE TEST -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -80,6 +81,7 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+
             <!-- Contenidor WELD per tests de CDI -->
             <dependency>
                 <groupId>org.jboss.arquillian.container</groupId>
@@ -93,6 +95,7 @@
                 <version>3.1.2.Final</version>
                 <scope>test</scope>
             </dependency>
+
             <!-- Per tests de Bean Validation -->
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
@@ -104,6 +107,20 @@
                 <groupId>org.glassfish</groupId>
                 <artifactId>javax.el</artifactId>
                 <version>3.0.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Per tests JPA -->
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>eclipselink</artifactId>
+                <version>2.7.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.199</version>
                 <scope>test</scope>
             </dependency>
 

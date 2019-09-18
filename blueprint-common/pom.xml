@@ -21,9 +21,11 @@
             <artifactId>javaee-api</artifactId>
         </dependency>
 
+        <!-- Dependències de TEST -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
