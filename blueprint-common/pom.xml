@@ -34,7 +34,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Contenidor WELD per tests de CDI -->
+        <!-- Contenidor WELD per tests de CDI amb Arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-weld-embedded</artifactId>
