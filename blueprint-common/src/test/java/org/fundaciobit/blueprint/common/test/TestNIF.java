@@ -9,7 +9,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-public class NIFTest {
+public class TestNIF {
 
     @NIF
     private String nif;
@@ -18,7 +18,7 @@ public class NIFTest {
     public void testValidNIF() {
         this.nif = "00000000T";
         final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        final Set<ConstraintViolation<NIFTest>> validate = validatorFactory.getValidator().validate(this);
+        final Set<ConstraintViolation<TestNIF>> validate = validatorFactory.getValidator().validate(this);
         Assert.assertTrue(validate.isEmpty());
     }
 
@@ -26,7 +26,7 @@ public class NIFTest {
     public void testInvalidNIF() {
         this.nif = "00000000R";
         final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        final Set<ConstraintViolation<NIFTest>> validate = validatorFactory.getValidator().validate(this);
+        final Set<ConstraintViolation<TestNIF>> validate = validatorFactory.getValidator().validate(this);
         Assert.assertFalse(validate.isEmpty());
     }
 

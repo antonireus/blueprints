@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 @RunWith(Arquillian.class)
-public class VersionTest {
+public class TestVersion {
 
     @Inject
     Version version;

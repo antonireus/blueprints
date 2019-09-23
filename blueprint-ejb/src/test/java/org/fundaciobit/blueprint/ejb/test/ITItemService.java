@@ -16,7 +16,7 @@ import javax.ejb.EJB;
 import java.util.Date;
 
 @RunWith(Arquillian.class)
-public class ItemServiceTest {
+public class ITItemService {
 
     @Deployment
     public static JavaArchive createDeployment() {

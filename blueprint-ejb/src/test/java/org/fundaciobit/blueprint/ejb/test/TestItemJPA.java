@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 import java.util.Date;
 import java.util.List;
 
-public class ItemJPATest {
+public class TestItemJPA {
 
     private static EntityManagerFactory emf;
     private static EntityManager em;
