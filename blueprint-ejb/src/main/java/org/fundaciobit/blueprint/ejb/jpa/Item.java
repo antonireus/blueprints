@@ -33,6 +33,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Requisits de les classes persistents:
@@ -179,5 +180,29 @@ public class Item implements Serializable {
     */
    public void setDescription(Map<String, String> description) {
       this.description = description;
+   }
+
+   /*
+      La implementació de equals i hashCode s'hauria de fer sempre emprant una clau natural.
+      En aquest cas, nif. O en cas que no n'hi hagi amb l'id, però comparant-ho només si no és
+      null, i retornant un valor fix al hashCode per evitar que canvii després de cridar persist.
+      Veure:
+      https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html
+      Apartat: 2.5.7. Implementing equals() and hashCode()
+    */
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if ( o == null || getClass() != o.getClass() ) {
+         return false;
+      }
+      Item item = (Item) o;
+      return nif.equals(item.nif);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(nif);
    }
 }
