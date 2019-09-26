@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@WebServlet(name="counterServlet", urlPatterns="/counter")
+@WebServlet(name="counterServlet", urlPatterns="/counter", loadOnStartup = 10)
 public class CounterServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 4433545994404713280L;
