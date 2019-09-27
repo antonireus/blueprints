@@ -1,5 +1,4 @@
 <%@ page isErrorPage="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Error</title>
@@ -9,32 +8,34 @@
 <table>
     <tr>
         <td>Status Code</td>
-        <td><c:out value="${pageContext.errorData.statusCode}" /></td>
+        <td>${pageContext.errorData.statusCode}</td>
     </tr>
     <tr>
         <td>Servlet Name</td>
-        <td><c:out value="${pageContext.errorData.servletName}" /></td>
+        <td>${pageContext.errorData.servletName}</td>
     </tr>
     <tr>
         <td>Request URI</td>
-        <td><c:out value="${pageContext.errorData.requestURI}" /></td>
+        <td>${pageContext.errorData.requestURI}</td>
     </tr>
     <tr>
         <td>Exception</td>
-        <td><c:out value="${pageContext.exception}" /></td>
+        <td>${pageContext.exception}</td>
     </tr>
     <tr>
         <td>Exception Message</td>
-        <td><c:out value="${pageContext.exception.message}" /></td>
+        <td>${pageContext.exception.message}</td>
     </tr>
     <tr>
         <td>Exception Cause</td>
-        <td><c:out value="${pageContext.exception.cause}" /></td>
+        <td>${pageContext.exception.cause}</td>
     </tr>
     <tr>
         <td>Exception Cause Message</td>
-        <td><c:out value="${pageContext.exception.cause.message}" /></td>
+        <td>${pageContext.exception.cause.message}</td>
     </tr>
 </table>
+<h2>StackTrace</h2>
+<pre>${pageContext.out.flush();pageContext.exception.printStackTrace(pageContext.response.writer)}</pre>
 </body>
 </html>

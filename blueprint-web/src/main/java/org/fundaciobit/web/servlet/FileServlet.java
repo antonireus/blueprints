@@ -11,12 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
+ * Llista els fitxers dins el directori de treball, i permet pujar-hi fitxers amb un formulari que defineixi
+ * un camp de tipus file i nom file.
+ *
  * Location (8.1.5) pot ser un directori absolut, o un directori relatiu. Si és relatiu o serà respecte
  * el directori temporal proporcinat pel contenidor a cada mòdul web: javax.servlet.context.tempdir (4.8.1).
  * Els fitxers es guardaran temporalment a disc a partir de 16k (16384 bytes)
@@ -46,6 +53,9 @@ public class FileServlet extends HttpServlet {
 
         // No hi ha manera d'agafar la cadena que s'ha ficat a location? Sembla que no, hem de repetir el literal.
         // El directori s'ha de crear, perquè no es crea automàticament.
+
+        // D'altra banda, hauríem de tenir en compte File.isAbsolut per saber si uploadDir és una ruta absoluta
+        // o és relativa a tempDir.
         uploadDir = new File(contextTempDir, "fileServlet");
         if (uploadDir.exists()) {
             log.info(uploadDir.getAbsolutePath() + " ja existeix.");
@@ -57,7 +67,11 @@ public class FileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<File> files = Arrays.asList(uploadDir.listFiles());
+        log.info("doGet");
+
+        File[] fileArray = uploadDir.listFiles();
+        List<File> files = fileArray != null ? Arrays.asList(fileArray) : new ArrayList<>();
+
         request.setAttribute("files", files);
         request.getRequestDispatcher("/files.jsp").forward(request, response);
     }
@@ -67,16 +81,27 @@ public class FileServlet extends HttpServlet {
 
         log.info("doPost");
 
-        Part filePart = request.getPart("file");
+        Part part = request.getPart("file");
 
-        log.info("Name: " + filePart.getName());
-        log.info("SubmittedFileName: " + filePart.getSubmittedFileName());
-        log.info("ContentType: " + filePart.getContentType());
-        log.info("Size: " + filePart.getSize());
+        log.info("Name: " + part.getName());
+        log.info("SubmittedFileName: " + part.getSubmittedFileName());
+        log.info("ContentType: " + part.getContentType());
+        log.info("Size: " + part.getSize());
 
-        if (filePart.getSize() > 0) {
-            filePart.write(UUID.randomUUID().toString());
-            filePart.delete();
+        if (part.getSize() > 0) {
+            String uuid = UUID.randomUUID().toString();
+            /*
+            En teoria bastaria fer part.write(uuid); però en jboss dona un error.
+            Així que copiam de l'inputStream.
+             */
+
+            // uploadDir és un directori temporal. Això en producció no serveix.
+            File savedFile = new File(uploadDir, uuid);
+            try (InputStream is = part.getInputStream()) {//try-with-resources tancarà automàticament l'InputStream
+                Files.copy(is, savedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+            // Borram els possibles fitxers temporals que s'hagin generat.
+            part.delete();
         }
 
         response.sendRedirect(request.getContextPath() + "/file");
