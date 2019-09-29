@@ -11,7 +11,7 @@ import javax.ejb.Singleton;
 
 /**
  * Feim servir un singleton per incrementar el contador evitant concurrència. A diferència de la solució amb un
- * lock JPA de base de dades, aquesta solució només es podria emprar si no hi ha altres aplicacions o components
+ * lock de JPA/base de dades, aquesta solució només es podria emprar si no hi ha altres aplicacions o components
  * atacant la mateixa taula de base de dades.
  */
 @Singleton
