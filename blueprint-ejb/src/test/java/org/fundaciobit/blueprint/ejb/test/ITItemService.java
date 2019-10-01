@@ -1,6 +1,7 @@
 package org.fundaciobit.blueprint.ejb.test;
 
 import org.fundaciobit.blueprint.ejb.jpa.Item;
+import org.fundaciobit.blueprint.ejb.jpa.UniqueConstraintException;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import java.util.Date;
 
 @RunWith(Arquillian.class)
@@ -43,6 +45,26 @@ public class ITItemService {
         itemService.create(item);
 
         Assert.assertNotNull(item.getId());
+    }
+
+    @Test
+    @InSequence(2)
+    public void testItemServiceDuplicateCreate() {
+        Item item = new Item();
+        item.setName("Test");
+        item.setCreation(new Date());
+        item.setNif("00000000T");
+        item.getDescription().put("ca", "Test ca");
+        item.getDescription().put("es", "Test es");
+
+        try {
+            itemService.create(item);
+            Assert.fail("No hauria de poder gravar perquè el NIF està repetit");
+        } catch (EJBException e) {
+            // Com que és una excepció de runtime arribarà empaquetada amb la EJB Exception.
+            // TODO: Potser hauria de ser una excepció d'aplicació, que tmabé pot fer rollback igualment.
+            Assert.assertEquals(e.getCausedByException().getClass(), UniqueConstraintException.class);
+        }
     }
 
 }

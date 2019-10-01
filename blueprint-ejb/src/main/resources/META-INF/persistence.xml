@@ -24,7 +24,7 @@
          Properties for EclipseLink
          Veure: https://www.eclipse.org/eclipselink/documentation/2.7/jpa/extensions/persistenceproperties_ref.htm
          -->
-         <property name="eclipselink.logging.level" value="FINE" />
+         <property name="eclipselink.logging.level.sql" value="FINE" />
          <property name="eclipselink.deploy-on-startup" value="true" />
       </properties>
    </persistence-unit>

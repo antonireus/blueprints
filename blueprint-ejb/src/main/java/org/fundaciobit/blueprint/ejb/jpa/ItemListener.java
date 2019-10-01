@@ -1,30 +1,25 @@
 package org.fundaciobit.blueprint.ejb.jpa;
 
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import java.util.Date;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javax.persistence.PersistenceException;
 
 /**
- * Reb els esdeveniments de JPA per l'entitat {@link Item}
+ * Reb els esdeveniments de JPA per l'entitat {@link Item}. Es pot emprar per fixar camps automàtics,
+ * o certes validacions. Permet també cridar a altres recursos, com enviar un missatge JMS o cridar EJBs.
+ * En general però no està recomant fer querys o accedir al mateix persistence context de l'entitat (veure
+ * darrer apartat del punt 3.5.2 de l'especificació JPA 2.2).
  *
- * @author Antoni
+ * @author areus
  */
 public class ItemListener {
 
     private static final Logger LOG = Logger.getLogger(ItemListener.class.getName());
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     /**
      * Es crida abans de fer la creació de Item.
+     * Assegura que la lletra del NIF està en majúscula i fixa la data de creació.
      *
      * @param item Item que és apunt de ser creat.
      */
@@ -35,36 +30,11 @@ public class ItemListener {
         item.setCreation(new Date());
         // Sempre guardam el NIF amb la lletra majuscula
         item.setNif(item.getNif().toUpperCase());
-
-        /*
-        Comprovam que el NIF no existeix ja.
-        Amb Hibernate, l'item encara no té ID i no està associat al context, no hi ha problema.
-        Amb EclipseLink, ja s'ha assignat un ID (cridant a la sequència), i en el moment que 
-        executam una consulta farà un flush que persistirà l'entitat, provocant la violació de la 
-        clau única que és el que voldríem evitar.
-        Cal mirar com desactivar aquest flush automàtic.
-        
-        També cal tenir en compte, fer una query al mateix persistence context dins els mètodes
-        d'un listener està, en general, desaconsellat per l'especificació (darrer incís punt 3.5.2)
-        */
-        
-        /*
-        LOG.info("Comprovar clau única NIF...");
-
-        List<Item> result = entityManager.createNamedQuery("findByNIF", Item.class)
-                .setParameter("nif", item.getNif())
-                .getResultList();
-                
-        if (!result.isEmpty()) {
-            String msg = "prePersist: " + item.getNif() + " ja existeix, ID=" + result.get(0).getId();
-            LOG.warning(msg);
-            throw new UniqueConstraintException(msg);
-        }
-        */
     }
 
     /**
      * Es crida abans de l'actualització d'un Item.
+     * Assegura que la lletra del NIF està en majúscula.
      *
      * @param item Item que és apunt de ser creat.
      */
@@ -73,8 +43,6 @@ public class ItemListener {
         LOG.info("preUpdate");
         // Sempre guardam el NIF amb la lletra majuscula
         item.setNif(item.getNif().toUpperCase());
-
-        // TODO Comprovar que el NIF que es va guardar no està associat amb un altre id
     }
 
 }
