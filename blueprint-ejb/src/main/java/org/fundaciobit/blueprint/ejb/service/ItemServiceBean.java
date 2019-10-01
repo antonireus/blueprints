@@ -9,17 +9,10 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.Date;
 import java.util.List;
 
 @Stateless
 public class ItemServiceBean extends AbstractJpaDAO<Long, Item> implements ItemService {
-
-   @Override
-   public Item create(Item entity) {
-      entity.setCreation(new Date());
-      return super.create(entity);
-   }
 
    @Override
    public List<Item> findByNIFs(List<@NIF String> nifs) {
