@@ -69,7 +69,7 @@ public class ItemServlet extends HttpServlet {
         log.info("doGet");
         request.setAttribute("items", itemService.findAll());
 
-        request.getRequestDispatcher("/item/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/item.jsp").forward(request, response);
     }
 
     @Override
