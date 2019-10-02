@@ -19,13 +19,17 @@ import java.util.logging.Logger;
  */
 @JMSDestinationDefinition(
         name="java:app/jms/MailQueue",
-        interfaceName = "javax.jms.Queue"
+        interfaceName = "javax.jms.Queue",
+        destinationName = "MailQueue"
 )
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
                 propertyValue = "java:app/jms/MailQueue"),
         @ActivationConfigProperty(propertyName = "destinationType",
-                propertyValue = "javax.jms.Queue")
+                propertyValue = "javax.jms.Queue"),
+        // Propietat necessaria per bug a Wildfly.
+        @ActivationConfigProperty(propertyName = "useJNDI",
+                propertyValue = "true")
 })
 public class MailServiceQueue implements MessageListener {
 
