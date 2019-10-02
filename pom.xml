@@ -283,6 +283,7 @@
                                  especificat a <users> -->
                                 <cargo.remote.username>admin</cargo.remote.username>
                                 <cargo.remote.password>changeit</cargo.remote.password>
+                                <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
                             </properties>
                         </configuration>
                         <skip>true</skip><!-- Desactivar el plugin a nivell general. Només activar a EAR -->
