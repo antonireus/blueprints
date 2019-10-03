@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
-    <title>Items</title>
+    <title>Mail</title>
 </head>
 <body>
     <h1>Versió ${version.number}</h1>
@@ -28,7 +28,7 @@
         <input id="subject" type="text" name="subject" value="Test subject" /><br />
 
         <label for="email">Email</label>
-        <input id="email" type="text" name="email" />
+        <input id="email" type="text" name="email" /><br />
 
         <label for="content">Content</label>
         <textarea id="content" name="content">Test</textarea>

@@ -22,7 +22,9 @@ import java.util.logging.Logger;
         interfaceName = "javax.jms.Queue",
         destinationName = "MailQueue"
 )
-@MessageDriven(activationConfig = {
+@MessageDriven(
+        name = "MailServiceQueue",
+        activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
                 propertyValue = "java:app/jms/MailQueue"),
         @ActivationConfigProperty(propertyName = "destinationType",

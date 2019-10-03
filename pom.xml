@@ -316,8 +316,7 @@
             <id>glassfish</id>
             <dependencies>
                 <!--
-                workaround per bug de Glassfish 5.0.1
-                https://github.com/eclipse-ee4j/glassfish/issues/22712
+                workaround per bug de Glassfish 5.0.1 https://github.com/eclipse-ee4j/glassfish/issues/22712
                 -->
                 <dependency>
                     <groupId>org.hibernate.validator</groupId>
@@ -352,6 +351,7 @@
                 </pluginManagement>
             </build>
         </profile>
+
         <profile>
             <id>liberty</id>
             <build>
@@ -368,16 +368,13 @@
                                     </zipUrlInstaller>
                                 </container>
                                 <configuration>
-                                    <datasources>
-                                        <datasource>
-                                            <!-- Fix ja que la configuració que genera per defecte no funciona -->
-                                            <connectionProperties>
-                                                <user>blueprint</user>
-                                                <password>blueprint</password>
-                                            </connectionProperties>
-                                            <transactionSupport>NO_TRANSACTION</transactionSupport>
-                                        </datasource>
-                                    </datasources>
+                                    <datasources combine.self="override" />
+                                    <configfiles>
+                                        <configfile>
+                                            <file>${project.build.outputDirectory}/liberty/blueprint-configuration.xml</file>
+                                            <todir>servers/defaultServer/configDropins/overrides</todir>
+                                        </configfile>
+                                    </configfiles>
                                     <properties>
                                         <cargo.servlet.port>9080</cargo.servlet.port>
                                     </properties>
