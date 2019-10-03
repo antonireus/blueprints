@@ -13,6 +13,7 @@
         <module>blueprint-ejb</module>
         <module>blueprint-web</module>
         <module>blueprint-ear</module>
+        <module>blueprint-it</module>
     </modules>
 
     <properties>
@@ -64,6 +65,13 @@
                 <artifactId>blueprint-web</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.fundaciobit.blueprint</groupId>
+                <artifactId>blueprint-ear</artifactId>
+                <version>${project.version}</version>
+                <type>ear</type>
             </dependency>
 
             <!-- DEPENDÈNCIES DE TEST -->
