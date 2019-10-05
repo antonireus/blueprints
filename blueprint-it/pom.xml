@@ -14,26 +14,11 @@
     <name>blueprint: Integration Tests</name>
 
     <dependencies>
-
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
             <artifactId>blueprint-ear</artifactId>
             <type>ear</type>
-            <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.6</version>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
 
     <profiles>
@@ -157,19 +142,79 @@
                         </configuration>
                         <executions>
                             <execution>
+                                <id>create-server</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>create</goal>
+                                </goals>
+                            </execution>
+                            <execution>
                                 <id>start-server</id>
                                 <phase>install</phase>
                                 <goals>
                                     <goal>start</goal>
                                 </goals>
                             </execution>
+                            <execution>
+                                <id>deploy-ear</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                                <configuration>
+                                    <deployPackages>dependencies</deployPackages>
+                                    <stripVersion>true</stripVersion>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-driver</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.postgresql</groupId>
+                                            <artifactId>postgresql</artifactId>
+                                            <version>${postgresql.driver.version}</version>
+                                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/configDropins/overrides</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/src/main/resources/liberty</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-
-
 
     </profiles>
 </project>

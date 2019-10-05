@@ -26,6 +26,8 @@
 
         <!-- Per defecte, no fer cap tipus de test -->
         <maven.test.skip>true</maven.test.skip>
+
+        <postgresql.driver.version>42.2.6</postgresql.driver.version>
     </properties>
 
     <dependencyManagement>
@@ -161,7 +163,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.6</version>
+            <version>${postgresql.driver.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -181,6 +183,10 @@
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.1</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
