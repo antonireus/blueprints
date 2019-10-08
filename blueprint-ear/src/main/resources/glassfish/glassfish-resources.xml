@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC
+        "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions //EN"
+        "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-connection-pool name="blueprintPool"
+                          datasource-classname="org.postgresql.xa.PGXADataSource"
+                          res-type="javax.sql.XADataSource">
+        <property name="User" value="blueprint" />
+        <property name="Password" value="blueprint" />
+        <property name="DriverClass" value="org.postgresql.Driver" />
+        <property name="DatabaseName" value="blueprint" />
+        <property name="ServerName" value="localhost" />
+        <property name="PortNumber" value="5432" />
+    </jdbc-connection-pool>
+    <jdbc-resource pool-name="blueprintPool" jndi-name="jdbc/blueprintDB"/>
+</resources>

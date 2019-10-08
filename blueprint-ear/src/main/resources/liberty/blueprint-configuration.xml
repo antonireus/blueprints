@@ -1,13 +1,10 @@
 <server>
     <!--
     Aquest fitxer ha d'anar dins: servers\defaultServer\configDropins\overrides
-
-    El plugin de Liberty de CARGO no dexia crear XADataSource, així que el cream aquí.
-    Les llibreries, amb el driver jdbc si que el desplega CARGO amb el nom "cargoLib"
-
     -->
+
     <dataSource jndiName="jdbc/blueprintDB" type="javax.sql.XADataSource" id="blueprintDB">
-        <jdbcDriver libraryRef="cargoLib" />
+        <jdbcDriver libraryRef="blueprintSharedLib" />
         <properties.postgresql
                 databaseName="blueprint"
                 serverName="localhost"
@@ -16,17 +13,26 @@
                 password="blueprint" />
     </dataSource>
 
+    <library id="blueprintSharedLib">
+        <fileset dir="${shared.resource.dir}" includes="*.jar"/>
+    </library>
+
     <!--
-    Liberty necessita que els MDB s'activin manualment dins la seva configuració
-    Veure l'opció 2.B de:
-    https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_dep_msg_mdbsib.html
+    Encara que el tag @JMSDestinationDefinition es per no haver de crear la coa,
+    a Liberty, el seu nom ha d'estar registrat
     -->
     <messagingEngine>
         <queue id="MailQueue" />
     </messagingEngine>
 
+    <!--
+    Liberty necessita que els MDB s'activin manualment dins la seva configuració
+    Veure l'opció 2.B de:
+    https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_dep_msg_mdbsib.html
+    -->
+    <!-- L'ID és "nomEARsenseExtensio"/"nomMòdulEJBSenseExtensio"/"NomMDB" -->
     <jmsActivationSpec id="blueprint/blueprint-ejb-0.9/MailServiceQueue">
-        <properties.wasJms destinationLookup="java:app/jms/MailQueue" />
+        <properties.wasJms destinationRef="java:app/jms/MailQueue" />
     </jmsActivationSpec>
 
 </server>

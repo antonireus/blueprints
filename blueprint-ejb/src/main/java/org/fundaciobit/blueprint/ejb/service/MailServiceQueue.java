@@ -29,9 +29,6 @@ import java.util.logging.Logger;
                 propertyValue = "java:app/jms/MailQueue"),
         @ActivationConfigProperty(propertyName = "destinationType",
                 propertyValue = "javax.jms.Queue"),
-        // Propietat necessaria per bug a Wildfly.
-        @ActivationConfigProperty(propertyName = "useJNDI",
-                propertyValue = "true")
 })
 public class MailServiceQueue implements MessageListener {
 

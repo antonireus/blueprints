@@ -13,7 +13,6 @@
         <module>blueprint-ejb</module>
         <module>blueprint-web</module>
         <module>blueprint-ear</module>
-        <module>blueprint-it</module>
     </modules>
 
     <properties>
@@ -155,18 +154,13 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.driver.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!-- Dependència per la instal·lació dels servidors amb cargo -->
-    <dependencies>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.driver.version}</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -222,9 +216,7 @@
                 </plugin>
 
                 <plugin>
-                    <!--
-                    Veure https://www.mojohaus.org/buildnumber-maven-plugin/usage.html
-                    -->
+                    <!-- Veure https://www.mojohaus.org/buildnumber-maven-plugin/usage.html -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
                     <version>1.4</version>
@@ -237,79 +229,24 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <!--
-                        <doCheck>true</doCheck>
-                        <doUpdate>true</doUpdate>
-                        -->
+                        <!-- <doCheck>true</doCheck>
+                        <doUpdate>true</doUpdate> -->
                         <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                     </configuration>
                 </plugin>
 
-                <!--
-                Plugin per permetre desplegar l'aplicació a un sevidor d'aplicacions. Per defecte Wildfly 14
-                ús: https://codehaus-cargo.github.io/cargo/Maven2+plugin.html
-                configuració: https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html
-                -->
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
                     <version>1.7.7</version>
-                    <configuration><!-- https://codehaus-cargo.github.io/cargo/WildFly+14.x.html -->
-                        <container>
-                            <containerId>wildfly14x</containerId>
-                            <zipUrlInstaller>
-                                <url>https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.zip</url>
-                                <downloadDir>${user.cargo.downloadDir}</downloadDir>
-                                <extractDir>${user.cargo.extractDir}</extractDir>
-                            </zipUrlInstaller>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>org.postgresql</groupId>
-                                    <artifactId>postgresql</artifactId>
-                                </dependency>
-                            </dependencies>
-                        </container>
-                        <configuration>
-                            <users>
-                                <user>
-                                    <name>areus</name>
-                                    <password>areus</password>
-                                    <roles>
-                                        <role>blp_user</role>
-                                    </roles>
-                                </user>
-                            </users>
-                            <datasources>
-                                <datasource>
-                                    <jndiName>jdbc/blueprintDB</jndiName>
-                                    <driverClass>org.postgresql.Driver</driverClass>
-                                    <url>jdbc:postgresql://localhost:5432/blueprint</url>
-                                    <transactionSupport>LOCAL_TRANSACTION</transactionSupport>
-                                    <username>blueprint</username>
-                                    <password>blueprint</password>
-                                </datasource>
-                            </datasources>
-                            <properties>
-                                <cargo.hostname>localhost</cargo.hostname>
-                                <cargo.servlet.port>8080</cargo.servlet.port>
-                                <cargo.port.offset>0</cargo.port.offset>
-                                <!-- wildfly/jboss no afaga bé aquesta configuració. Replica l'usuari
-                                 especificat a <users> -->
-                                <cargo.remote.username>admin</cargo.remote.username>
-                                <cargo.remote.password>changeit</cargo.remote.password>
-                                <cargo.jboss.configuration>standalone-full</cargo.jboss.configuration>
-                            </properties>
-                        </configuration>
-                        <skip>true</skip><!-- Desactivar el plugin a nivell general. Només activar a EAR -->
-                    </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
 
     <profiles>
         <profile>
+            <!-- Per incloure el mòdul web addicional d'API REST -->
             <id>apirest</id>
             <modules>
                 <module>blueprint-rest</module>
@@ -324,80 +261,6 @@
                     </dependency>
                 </dependencies>
             </dependencyManagement>
-        </profile>
-
-        <profile>
-            <id>glassfish</id>
-            <dependencies>
-                <!--
-                workaround per bug de Glassfish 5.0.1 https://github.com/eclipse-ee4j/glassfish/issues/22712
-                -->
-                <dependency>
-                    <groupId>org.hibernate.validator</groupId>
-                    <artifactId>hibernate-validator-cdi</artifactId>
-                    <version>6.0.10.Final</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.codehaus.cargo</groupId>
-                            <artifactId>cargo-maven2-plugin</artifactId>
-                            <configuration><!-- https://codehaus-cargo.github.io/cargo/GlassFish+5.x.html -->
-                                <container>
-                                    <containerId>glassfish5x</containerId>
-                                    <zipUrlInstaller>
-                                        <!-- <url>https://download.oracle.com/glassfish/5.0.1/release/glassfish-5.0.1.zip</url> -->
-                                        <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/glassfish/glassfish-5.1.0.zip</url>
-                                    </zipUrlInstaller>
-                                    <dependencies combine.children="append">
-                                        <dependency>
-                                            <groupId>org.hibernate.validator</groupId>
-                                            <artifactId>hibernate-validator-cdi</artifactId>
-                                        </dependency>
-                                    </dependencies>
-                                </container>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-
-        <profile>
-            <id>liberty</id>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.codehaus.cargo</groupId>
-                            <artifactId>cargo-maven2-plugin</artifactId>
-                            <configuration><!-- https://codehaus-cargo.github.io/cargo/WebSphere+Liberty.html -->
-                                <container>
-                                    <containerId>liberty</containerId>
-                                    <zipUrlInstaller>
-                                        <url>http://repo.maven.apache.org/maven2/com/ibm/websphere/appserver/runtime/wlp-javaee8/19.0.0.8/wlp-javaee8-19.0.0.8.zip</url>
-                                    </zipUrlInstaller>
-                                </container>
-                                <configuration>
-                                    <datasources combine.self="override" />
-                                    <configfiles>
-                                        <configfile>
-                                            <file>${project.build.outputDirectory}/liberty/blueprint-configuration.xml</file>
-                                            <todir>servers/defaultServer/configDropins/overrides</todir>
-                                        </configfile>
-                                    </configfiles>
-                                    <properties>
-                                        <cargo.servlet.port>9080</cargo.servlet.port>
-                                    </properties>
-                                </configuration>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
         </profile>
     </profiles>
 
