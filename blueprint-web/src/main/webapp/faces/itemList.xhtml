@@ -1,0 +1,18 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<ui:composition template="template.xhtml">
+    <ui:define name="title">
+        Items!!
+    </ui:define>
+    <ui:define name="body">
+        <ul>
+        <ui:repeat value="#{itemController.items}" var="item">
+            <li><h:outputText value="#{item.name}" /></li>
+        </ui:repeat>
+        </ul>
+    </ui:define>
+</ui:composition>
+</html>

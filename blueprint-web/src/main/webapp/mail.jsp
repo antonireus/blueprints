@@ -1,4 +1,4 @@
-<%@ page info="Item Form & List" %>
+<%@ page info="Mail Form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
@@ -23,7 +23,7 @@
         <c:remove var="mail_constraintViolations" scope="session"/>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/mail" method="post">
+    <form action="<c:url value="/mail" />" method="post">
         <label for="subject">Subject</label>
         <input id="subject" type="text" name="subject" value="Test subject" /><br />
 

@@ -23,7 +23,7 @@
         <c:remove var="item_constraintViolations" scope="session"/>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/item" method="post">
+    <form action="<c:url value="/item" />" method="post">
         <label for="name">Name</label>
         <input id="name" type="text" name="name" value="${param.name}"/>
 

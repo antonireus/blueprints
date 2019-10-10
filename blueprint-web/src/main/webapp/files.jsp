@@ -1,4 +1,4 @@
-<%@ page info="Item Form & List" %>
+<%@ page info="File Form & List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
@@ -9,7 +9,7 @@
 <h1>Versió ${version.number}</h1>
 <h2>Files</h2>
 
-<form action="${pageContext.request.contextPath}/file" method="post" enctype="multipart/form-data">
+<form action="<c:url value="/file" />" method="post" enctype="multipart/form-data">
 
     <label for="name">Name</label>
     <input id="name" type="text" name="name"/><br />
