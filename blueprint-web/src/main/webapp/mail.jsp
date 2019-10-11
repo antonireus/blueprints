@@ -28,7 +28,7 @@
         <input id="subject" type="text" name="subject" value="Test subject" /><br />
 
         <label for="email">Email</label>
-        <input id="email" type="text" name="email" /><br />
+        <input id="email" type="text" name="email" value="test@test.com" /><br />
 
         <label for="content">Content</label>
         <textarea id="content" name="content">Test</textarea>

@@ -10,5 +10,5 @@ import javax.validation.constraints.NotNull;
 @Local
 public interface MailService {
 
-    void sendEmail(@NotNull String subject, @Email String destination, @NotNull String content);
+    void sendEmail(@NotNull String subject, @NotNull @Email String destination, @NotNull String content);
 }

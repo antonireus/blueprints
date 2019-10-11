@@ -1,16 +1,20 @@
 package org.fundaciobit.blueprint.ejb.service;
 
 
+import org.fundaciobit.blueprint.ejb.mail.MailSender;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
+import javax.inject.Inject;
 import javax.jms.JMSDestinationDefinition;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +36,9 @@ import java.util.logging.Logger;
 })
 public class MailServiceQueue implements MessageListener {
 
+    @Inject
+    private MailSender mailSender;
+
     @Resource
     private MessageDrivenContext context;
 
@@ -52,10 +59,16 @@ public class MailServiceQueue implements MessageListener {
         try {
             String id = message.getJMSMessageID();
             int priority = message.getJMSPriority();
-            String content = message.getBody(String.class);
-            Object[] params = new Object[] {id, priority, content };
+            Map map = message.getBody(Map.class);
+            String subject = (String) map.get("subject");
+            String destination = (String) map.get("destination");
+            String content = (String) map.get("content");
 
-            LOG.log(Level.INFO, "Rebut id:{0}, priority:{1}\ncontent:{2}", params);
+            Object[] params = new Object[] {id, priority, subject, destination, content };
+            LOG.log(Level.INFO, "Rebut id:{0}, priority:{1}, subject:{2}, destination:{3},\n" +
+                    "content:{4}", params);
+
+            mailSender.sendEmail(subject, destination, content);
 
         } catch (JMSException e) {
             LOG.log(Level.SEVERE, e.getMessage());
