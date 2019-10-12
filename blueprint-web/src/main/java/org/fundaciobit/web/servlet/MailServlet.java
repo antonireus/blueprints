@@ -14,7 +14,9 @@ import java.util.logging.Logger;
 @WebServlet(name = "mailServlet", urlPatterns = "/mail", loadOnStartup = 2)
 public class MailServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(MailServlet.class.getName());
+	private static final long serialVersionUID = -3256837260198852283L;
+
+	private static final Logger log = Logger.getLogger(MailServlet.class.getName());
 
     @EJB
     private MailService mailService;

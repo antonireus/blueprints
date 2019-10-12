@@ -59,7 +59,7 @@ public class MailServiceQueue implements MessageListener {
         try {
             String id = message.getJMSMessageID();
             int priority = message.getJMSPriority();
-            Map map = message.getBody(Map.class);
+            Map<?, ?> map = message.getBody(Map.class);
             String subject = (String) map.get("subject");
             String destination = (String) map.get("destination");
             String content = (String) map.get("content");

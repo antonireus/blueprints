@@ -32,7 +32,9 @@ import java.util.logging.Logger;
 @MultipartConfig(location = "fileServlet", fileSizeThreshold = 16384)
 public class FileServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(FileServlet.class.getName());
+	private static final long serialVersionUID = 7613141480400005252L;
+
+	private static final Logger log = Logger.getLogger(FileServlet.class.getName());
 
     private File uploadDir;
 

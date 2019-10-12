@@ -1,7 +1,11 @@
 package org.fundaciobit.blueprint.ejb.test;
 
 import org.fundaciobit.blueprint.ejb.jpa.Item;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javax.persistence.EntityManager;

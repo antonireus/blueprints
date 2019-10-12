@@ -10,7 +10,9 @@ import javax.persistence.PersistenceException;
  */
 public class UniqueConstraintException extends PersistenceException {
 
-    public UniqueConstraintException(String message) {
+	private static final long serialVersionUID = -7950645901253019396L;
+
+	public UniqueConstraintException(String message) {
         super(message);
     }
 }
