@@ -14,13 +14,21 @@ import javax.jms.JMSDestinationDefinition;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.mail.MailSessionDefinition;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Coa per un servei de email.
+ * Hi definim el servei de email i la coa JMS.
  */
+@MailSessionDefinition(
+        name = "java:app/mail/MailSession",
+        host = "localhost",
+        from = "server@test.com",
+        transportProtocol = "smtp"
+)
 @JMSDestinationDefinition(
         name="java:app/jms/MailQueue",
         interfaceName = "javax.jms.Queue",
