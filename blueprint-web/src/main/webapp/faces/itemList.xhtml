@@ -1,6 +1,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
 >
 <ui:composition template="template.xhtml">
@@ -8,11 +9,45 @@
         Items!!
     </ui:define>
     <ui:define name="body">
-        <ul>
-        <ui:repeat value="#{itemController.items}" var="item">
-            <li><h:outputText value="#{item.name}" /></li>
-        </ui:repeat>
-        </ul>
+
+        <h:form id="form_item_new">
+            <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+                <h:outputLabel for="name" value="#{labels.item_name}" />
+                <h:inputText id="name" value="#{itemController.editItem.name}" />
+                <h:message for="name" />
+
+                <h:outputLabel for="nif" value="#{labels.item_nif}" />
+                <h:inputText id="nif" value="#{itemController.editItem.nif}" />
+                <h:message for="nif" />
+
+                <h:commandButton value="#{labels.button_new}" action="#{itemController.saveItem}" >
+                    <f:ajax execute="@form" render="@form dataTable_item" />
+                </h:commandButton>
+                <h:commandButton type="reset" value="#{labels.button_reset}" />
+
+            </h:panelGrid>
+        </h:form>
+
+        <h:dataTable id="dataTable_item" value="#{itemController.items}" var="item">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="#{labels.item_id}"/>
+                </f:facet>
+                <h:outputText value="#{item.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="#{labels.item_name}"/>
+                </f:facet>
+                <h:outputText value="#{item.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="#{labels.item_nif}"/>
+                </f:facet>
+                <h:outputText value="#{item.nif}"/>
+            </h:column>
+        </h:dataTable>
     </ui:define>
 </ui:composition>
 </html>

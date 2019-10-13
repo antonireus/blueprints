@@ -11,6 +11,7 @@
     <li><a href="<c:url value="/file" />">Files</a></li>
     <li><a href="<c:url value="/mail" />">Mail</a></li>
     <li><a href="<c:url value="/chat.jsp" />">Chat</a></li>
+    <li><a href="<c:url value="/faces" />">Faces</a></li>
 </ul>
 </body>
 </html>

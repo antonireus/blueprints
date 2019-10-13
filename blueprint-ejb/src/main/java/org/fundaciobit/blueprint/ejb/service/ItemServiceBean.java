@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Stateless
@@ -37,7 +38,7 @@ public class ItemServiceBean extends AbstractJpaDAO<Long, Item> implements ItemS
    }
 
    @Override
-   public Item findByNIF(@NIF String nif) {
+   public Item findByNIF(@NotNull @NIF String nif) {
       CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
       CriteriaQuery<Item> query = criteriaBuilder.createQuery(Item.class);
       Root<Item> from = query.from(Item.class);
