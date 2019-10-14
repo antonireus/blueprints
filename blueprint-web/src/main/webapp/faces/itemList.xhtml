@@ -10,25 +10,32 @@
     </ui:define>
     <ui:define name="body">
 
-        <h:form id="form_item_new">
+        <h:form id="newItemForm">
+            <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
             <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
                 <h:outputLabel for="name" value="#{labels.item_name}" />
                 <h:inputText id="name" value="#{itemController.editItem.name}" />
-                <h:message for="name" />
+                <h:message for="name" errorStyle="color: red" />
 
                 <h:outputLabel for="nif" value="#{labels.item_nif}" />
                 <h:inputText id="nif" value="#{itemController.editItem.nif}" />
-                <h:message for="nif" />
+                <h:message for="nif" errorStyle="color: red" />
 
                 <h:commandButton value="#{labels.button_new}" action="#{itemController.saveItem}" >
-                    <f:ajax execute="@form" render="@form dataTable_item" />
+                    <f:ajax execute="@form" render="@form dataTable :paginationForm" />
                 </h:commandButton>
                 <h:commandButton type="reset" value="#{labels.button_reset}" />
-
             </h:panelGrid>
         </h:form>
 
-        <h:dataTable id="dataTable_item" value="#{itemController.items}" var="item">
+        <h:dataTable id="dataTable" value="#{itemController.items}" var="item">
+            <h:column>
+                <f:facet name="header">
+                    Índex
+                </f:facet>
+                <h:outputText
+                        value="#{itemController.items.indexOf(item) + itemController.pagination.pageFirstItem}"/>
+            </h:column>
             <h:column>
                 <f:facet name="header">
                     <h:outputText value="#{labels.item_id}"/>
@@ -48,6 +55,22 @@
                 <h:outputText value="#{item.nif}"/>
             </h:column>
         </h:dataTable>
+
+        <h:form id="paginationForm">
+            <h:commandButton
+                    value="&lt;&lt;"
+                    disabled="#{!itemController.pagination.hasPreviousPage}"
+                    action="#{itemController.previous}">
+                <f:ajax render="@form dataTable" />
+            </h:commandButton>
+            <h:commandButton
+                    value="&gt;&gt;"
+                    disabled="#{!itemController.pagination.hasNextPage}"
+                    action="#{itemController.next}">
+                <f:ajax render="@form dataTable" />
+            </h:commandButton>
+        </h:form>
+
     </ui:define>
 </ui:composition>
 </html>

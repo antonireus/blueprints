@@ -7,7 +7,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -99,10 +100,40 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
      */
     @Override
     public List<E> findAll() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
-        Root<E> entity = query.from(entityClass);
-        TypedQuery<E> typedQuery = entityManager.createQuery(query.select(entity));
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<E> cq = cb.createQuery(entityClass);
+        cq.select(cq.from(entityClass));
+        TypedQuery<E> typedQuery = entityManager.createQuery(cq);
         return typedQuery.getResultList();
+    }
+
+    /**
+     * Carrega un subconjunt de les entitats.
+     * @param firstResult índex del primer resultat.
+     * @param size nombre màxim de resultats.
+     * @return llista de totes les entitats.
+     */
+    @Override
+    public List<E> findAll(@PositiveOrZero int firstResult, @Positive int size) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<E> cq = cb.createQuery(entityClass);
+        cq.select(cq.from(entityClass));
+        TypedQuery<E> typedQuery = entityManager.createQuery(cq);
+        typedQuery.setFirstResult(firstResult);
+        typedQuery.setMaxResults(size);
+        return typedQuery.getResultList();
+    }
+
+    /**
+     * Retorna el nombre d'entitats.
+     * @return Nombre d'entitats.
+     */
+    @Override
+    public long countAll() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        cq.select(cb.count(cq.from(entityClass)));
+        TypedQuery<Long> typedQuery = entityManager.createQuery(cq);
+        return typedQuery.getSingleResult();
     }
 }

@@ -1,5 +1,7 @@
 package org.fundaciobit.blueprint.ejb.dao;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 /**
@@ -48,4 +50,18 @@ public interface DAO<K, E> {
      * @return llista de totes les entitats.
      */
     List<E> findAll();
+
+    /**
+     * Carrega un subconjunt de les entitats.
+     * @param firstResult índex del primer resultat.
+     * @param size nombre màxim de resultats.
+     * @return llista de totes les entitats.
+     */
+    List<E> findAll(@PositiveOrZero int firstResult, @Positive int size);
+
+    /**
+     * Retorna el nombre d'entitats.
+     * @return Nombre d'entitats.
+     */
+    long countAll();
 }
