@@ -1,0 +1,12 @@
+
+- Glassfish
+    * Els JSP no fan cas del <default-content-type> de la configuració de JSPs del web.xml (reportar!!)
+    * Error a la llibreria hibernate-validator-cdi https://github.com/eclipse-ee4j/glassfish/issues/22712
+
+- Liberty
+    * Si es reaprofita una mateixa classe per implementar l'Encoder i el Decoder d'un Endpoint Websocket. Es
+     crida dos pics. (Reportar!!!)
+
+- Diferències vàries
+    * L'especificació no ho manda, però Glassfish i Wildfly injecten dins les classes Encoder i Decoder de websocket. En canvi wildfly no.
+    * Durant l'event prePersist de JPA EclipseLink(Glassfish/Liberty) ja té preassignat l'identificador (ha fet crida a la seqüència).
