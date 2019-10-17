@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  * Veure apartat 2.5.2.1 de l'especificació per saber com gestiona JSF els locales, però bàsicament tenir
  * en compte que per una banda hi ha el locale per defece i per l'altre la llista de suportats, i cal juntar-los.
  */
-@Named
+@Named("user")
 @SessionScoped
-public class SessionController implements Serializable {
+public class UserSessionController implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(ItemController.class.getName());
 
@@ -31,10 +31,14 @@ public class SessionController implements Serializable {
         return availableLocales;
     }
 
-    private Locale currentLocale;
+    private String language;
 
-    public Locale getCurrentLocale() {
-        return currentLocale;
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @PostConstruct
@@ -46,6 +50,6 @@ public class SessionController implements Serializable {
 
         // Per defecte inialitzam el locale de l'usuari amb el locale que haurà autodectat el view d'acord amb
         // punt 2.5.2.1 de l'especificació
-        currentLocale = context.getViewRoot().getLocale();
+        language = context.getViewRoot().getLocale().getLanguage();
     }
 }

@@ -3,8 +3,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xml:lang="#{sessionController.currentLocale}"
-      lang="#{sessionController.currentLocale}"
+      xml:lang="#{user.language}"
+      lang="#{user.language}"
 ><!--
 segons https://www.w3.org/International/questions/qa-html-language-declarations
 s'ha de definir tant xml:lang com lang amb l'idioma de la pàgina
@@ -13,7 +13,7 @@ s'ha de definir tant xml:lang com lang amb l'idioma de la pàgina
 Si no fixam el locale amb f:view sempre agafarà el valor que correspon al navegador que millor encaixa
 amb els default/supported locales. Veure 2.5.2.1 de l'especificació JSF
 -->
-<f:view locale="#{sessionController.currentLocale}">
+<f:view locale="#{user.language}">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">Títol per defecte</ui:insert></title>
@@ -23,13 +23,16 @@ amb els default/supported locales. Veure 2.5.2.1 de l'especificació JSF
         <h1>
             <ui:insert name="title">Títol per defecte</ui:insert>
         </h1>
-        Locale actual: #{sessionController.currentLocale.displayName}<br />
-        Locales disponibles:
-        <ul>
-            <ui:repeat value="#{sessionController.availableLocales}" var="locale">
-                <li>#{locale.displayName}</li>
-            </ui:repeat>
-        </ul>
+        Locale: #{user.language}
+        <h:form id="changeLocaleForm">
+            <h:selectOneMenu value="#{user.language}">
+                <f:selectItems value="#{user.availableLocales}"
+                               var="locale"
+                               itemLabel="#{locale.language}"
+                               itemValue="#{locale.language}"/>
+                <f:ajax render="@all" />
+            </h:selectOneMenu>
+        </h:form>
         <div>
             <ui:insert name="body">Cos per defecte</ui:insert>
         </div>
