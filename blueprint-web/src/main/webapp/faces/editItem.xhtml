@@ -1,12 +1,21 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
 >
 <ui:composition template="template.xhtml">
+    <ui:define name="metadata">
+        <f:metadata>
+            <!-- Al principi de la vista, es fixarà el paràmetre rebut dins
+            l'id de l'ítem, i amb l'acció loadItem el carregarem. -->
+            <f:viewParam name="id" value="#{editItemController.item.id}" />
+            <f:viewAction action="#{editItemController.loadItem}" />
+        </f:metadata>
+    </ui:define>
     <ui:define name="title">
-        Items!!
+        <h:outputText value="#{labels.item_new}" rendered="#{empty editItemController.item.id}" />
+        <h:outputText value="#{labels.item_edit}" rendered="#{!empty editItemController.item.id}" />
     </ui:define>
     <ui:define name="body">
 
@@ -14,17 +23,23 @@
             <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
             <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
                 <h:outputLabel for="name" value="#{labels.item_name}" />
-                <h:inputText id="name" value="#{itemController.editItem.name}" />
+                <h:inputText id="name" value="#{editItemController.item.name}" />
                 <h:message for="name" errorStyle="color: red" />
 
                 <h:outputLabel for="nif" value="#{labels.item_nif}" />
-                <h:inputText id="nif" value="#{itemController.editItem.nif}" />
+                <h:inputText id="nif" value="#{editItemController.item.nif}" />
                 <h:message for="nif" errorStyle="color: red" />
 
-                <h:commandButton value="#{labels.button_new}" action="#{itemController.saveItem}" >
-                    <f:ajax execute="@form" render="@form dataTable :paginationForm" />
+                <h:commandButton value="#{labels.button_create}" action="#{editItemController.createItem}"
+                                 rendered="#{empty editItemController.item.id}"  >
+                    <f:ajax execute="@form" render="@form" />
                 </h:commandButton>
-                <h:commandButton type="reset" value="#{labels.button_reset}" />
+
+                <h:commandButton value="#{labels.button_update}" action="#{editItemController.updateItem}"
+                                 rendered="#{!empty editItemController.item.id}"  >
+                    <f:ajax execute="@form" render="@form" />
+                </h:commandButton>
+
             </h:panelGrid>
         </h:form>
 

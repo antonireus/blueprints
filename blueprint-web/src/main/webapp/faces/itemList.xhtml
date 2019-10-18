@@ -1,7 +1,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
 >
 <ui:composition template="template.xhtml">
@@ -10,37 +10,23 @@
     </ui:define>
     <ui:define name="body">
 
-        <h:form id="newItemForm">
-            <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
-            <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
-                <h:outputLabel for="name" value="#{labels.item_name}" />
-                <h:inputText id="name" value="#{itemController.editItem.name}" />
-                <h:message for="name" errorStyle="color: red" />
+        <h:messages errorStyle="color: red" infoStyle="color: green" />
 
-                <h:outputLabel for="nif" value="#{labels.item_nif}" />
-                <h:inputText id="nif" value="#{itemController.editItem.nif}" />
-                <h:message for="nif" errorStyle="color: red" />
-
-                <h:commandButton value="#{labels.button_new}" action="#{itemController.saveItem}" >
-                    <f:ajax execute="@form" render="@form dataTable :paginationForm" />
-                </h:commandButton>
-                <h:commandButton type="reset" value="#{labels.button_reset}" />
-            </h:panelGrid>
-        </h:form>
-
-        <h:dataTable id="dataTable" value="#{itemController.items}" var="item">
+        <h:dataTable id="dataTable" value="#{listItemController.items}" var="item">
             <h:column>
                 <f:facet name="header">
                     Índex
                 </f:facet>
                 <h:outputText
-                        value="#{itemController.items.indexOf(item) + itemController.pagination.pageFirstItem}"/>
+                        value="#{listItemController.items.indexOf(item) + listItemController.pagination.pageFirstItem}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">
                     <h:outputText value="#{labels.item_id}"/>
                 </f:facet>
-                <h:outputText value="#{item.id}"/>
+                <h:link outcome="editItem" value="#{item.id}">
+                    <f:param name="id" value="#{item.id}" />
+                </h:link>
             </h:column>
             <h:column>
                 <f:facet name="header">
@@ -59,17 +45,19 @@
         <h:form id="paginationForm">
             <h:commandButton
                     value="&lt;&lt;"
-                    disabled="#{!itemController.pagination.hasPreviousPage}"
-                    action="#{itemController.previous}">
+                    disabled="#{!listItemController.pagination.hasPreviousPage}"
+                    action="#{listItemController.previous}">
                 <f:ajax render="@form dataTable" />
             </h:commandButton>
             <h:commandButton
                     value="&gt;&gt;"
-                    disabled="#{!itemController.pagination.hasNextPage}"
-                    action="#{itemController.next}">
+                    disabled="#{!listItemController.pagination.hasNextPage}"
+                    action="#{listItemController.next}">
                 <f:ajax render="@form dataTable" />
             </h:commandButton>
         </h:form>
+
+        <h:button outcome="editItem" value="Crear nou item" />
 
     </ui:define>
 </ui:composition>

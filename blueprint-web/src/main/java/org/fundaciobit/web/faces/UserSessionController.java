@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 @SessionScoped
 public class UserSessionController implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(ItemController.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserSessionController.class.getName());
 
     @Inject
     private FacesContext context;
@@ -31,6 +31,11 @@ public class UserSessionController implements Serializable {
         return availableLocales;
     }
 
+    /**
+     * Idioma seleccionat.
+     * TODO: Seria millor treballar directament amb Locale? Només s'hauria de solucioanr el problema
+     * de la conversió.
+     */
     private String language;
 
     public String getLanguage() {
@@ -45,6 +50,7 @@ public class UserSessionController implements Serializable {
     private void init() {
         LOG.info("init");
         availableLocales = new ArrayList<>();
+        // TODO: liberty/MyFaces ja afegeix el default-locale dins els supported-locales.
         availableLocales.add(context.getApplication().getDefaultLocale());
         context.getApplication().getSupportedLocales().forEachRemaining(availableLocales::add);
 
