@@ -1,8 +1,10 @@
 package org.fundaciobit.blueprint.ejb.dao;
 
+import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Defineix les operacions dels Data Access Object per una entitat.
@@ -64,4 +66,7 @@ public interface DAO<K, E> {
      * @return Nombre d'entitats.
      */
     long countAll();
+
+    List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size,
+                         Map<SingularAttribute<E, ?>, Object> filter);
 }

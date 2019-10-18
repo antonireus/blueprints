@@ -7,10 +7,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Implementació bàsica d'un {@link DAO}.
@@ -135,5 +139,20 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         cq.select(cb.count(cq.from(entityClass)));
         TypedQuery<Long> typedQuery = entityManager.createQuery(cq);
         return typedQuery.getSingleResult();
+    }
+
+    public List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size,
+                                Map<SingularAttribute<E, ?>, Object> filter) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<E> cq = cb.createQuery(entityClass);
+        final Root<E> root = cq.from(entityClass);
+        cq.select(root);
+        cq.where(filter.keySet().stream()
+                .map(attribute -> cb.equal(root.get(attribute), filter.get(attribute)))
+                .toArray(Predicate[]::new));
+        TypedQuery<E> typedQuery = entityManager.createQuery(cq);
+        typedQuery.setFirstResult(firstResult);
+        typedQuery.setMaxResults(size);
+        return typedQuery.getResultList();
     }
 }

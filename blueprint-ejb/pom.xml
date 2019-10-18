@@ -20,6 +20,13 @@
             <artifactId>javaee-api</artifactId>
         </dependency>
 
+        <!-- Generador de metamodel de JPA -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
             <artifactId>blueprint-common</artifactId>
@@ -89,6 +96,9 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

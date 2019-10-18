@@ -47,6 +47,14 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- Generador de metamodel de JPA -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>5.4.6.Final</version>
+                <scope>provided</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.fundaciobit.blueprint</groupId>
                 <artifactId>blueprint-common</artifactId>

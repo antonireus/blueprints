@@ -1,6 +1,7 @@
 package org.fundaciobit.blueprint.ejb.test;
 
 import org.fundaciobit.blueprint.ejb.jpa.Item;
+import org.fundaciobit.blueprint.ejb.jpa.Item_;
 import org.fundaciobit.blueprint.ejb.jpa.UniqueConstraintException;
 import org.fundaciobit.blueprint.ejb.service.ItemService;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -15,7 +16,11 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.persistence.metamodel.SingularAttribute;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RunWith(Arquillian.class)
 public class ITItemService {
@@ -38,7 +43,6 @@ public class ITItemService {
     public void testItemServiceCreate() {
         Item item = new Item();
         item.setName("Test");
-        item.setCreation(new Date());
         item.setNif("00000000T");
         item.getDescription().put("ca", "Test ca");
         item.getDescription().put("es", "Test es");
@@ -49,6 +53,38 @@ public class ITItemService {
 
     @Test
     @InSequence(2)
+    public void testItemServiceFilter() {
+        {
+            Item item = new Item();
+            item.setName("Test");
+            item.setNif("00000001R");
+            item.getDescription().put("ca", "Test ca");
+            item.getDescription().put("es", "Test es");
+            itemService.create(item);
+        }
+        {
+            Item item = new Item();
+            item.setName("No hi ha la paraula");
+            item.setNif("00000002W");
+            item.getDescription().put("ca", "Test ca");
+            item.getDescription().put("es", "Test es");
+            itemService.create(item);
+        }
+
+        Assert.assertEquals(3, itemService.findAll().size());
+
+        Map<SingularAttribute<Item, ?>, Object> filters = new HashMap<>();
+        filters.put(Item_.name, "Test");
+
+        List<Item> result = itemService.findFiltered(0, 5, filters);
+
+        Assert.assertEquals(2, result.size());
+        Assert.assertEquals("Test", result.get(0).getName());
+        Assert.assertEquals("Test", result.get(1).getName());
+    }
+
+    @Test
+    @InSequence(3)
     public void testItemServiceDuplicateCreate() {
         Item item = new Item();
         item.setName("Test");
