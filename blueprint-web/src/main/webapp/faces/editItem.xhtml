@@ -1,0 +1,33 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<ui:composition template="template.xhtml">
+    <ui:define name="title">
+        Items!!
+    </ui:define>
+    <ui:define name="body">
+
+        <h:form id="editItemForm">
+            <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
+            <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+                <h:outputLabel for="name" value="#{labels.item_name}" />
+                <h:inputText id="name" value="#{itemController.editItem.name}" />
+                <h:message for="name" errorStyle="color: red" />
+
+                <h:outputLabel for="nif" value="#{labels.item_nif}" />
+                <h:inputText id="nif" value="#{itemController.editItem.nif}" />
+                <h:message for="nif" errorStyle="color: red" />
+
+                <h:commandButton value="#{labels.button_new}" action="#{itemController.saveItem}" >
+                    <f:ajax execute="@form" render="@form dataTable :paginationForm" />
+                </h:commandButton>
+                <h:commandButton type="reset" value="#{labels.button_reset}" />
+            </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>
