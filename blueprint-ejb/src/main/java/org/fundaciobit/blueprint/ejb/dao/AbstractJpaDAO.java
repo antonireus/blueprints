@@ -140,6 +140,7 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         return typedQuery.getSingleResult();
     }
 
+    @Override
     public List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size, Map<String, String> filter) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(entityClass);
@@ -158,6 +159,7 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         return typedQuery.getResultList();
     }
 
+    @Override
     public long countFiltered(Map<String, String> filter) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);

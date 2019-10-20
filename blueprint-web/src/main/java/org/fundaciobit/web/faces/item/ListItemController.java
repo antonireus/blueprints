@@ -32,9 +32,9 @@ public class ListItemController implements Serializable {
 
     private List<Item> items;
 
-    private Map<String, String> filter = new HashMap<>();
+    private final Map<String, String> filter = new HashMap<>();
 
-    private PaginationHelper pagination = new PaginationHelper(5);
+    private final PaginationHelper pagination = new PaginationHelper(5);
 
     public List<Item> getItems() {
         return items;
