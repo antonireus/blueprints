@@ -9,7 +9,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.lang.reflect.ParameterizedType;
@@ -141,18 +140,37 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         return typedQuery.getSingleResult();
     }
 
-    public List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size,
-                                Map<SingularAttribute<E, ?>, Object> filter) {
+    public List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size, Map<String, String> filter) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(entityClass);
         final Root<E> root = cq.from(entityClass);
         cq.select(root);
-        cq.where(filter.keySet().stream()
-                .map(attribute -> cb.equal(root.get(attribute), filter.get(attribute)))
-                .toArray(Predicate[]::new));
+        if (!filter.isEmpty()) {
+            cq.where(filter.keySet().stream()
+                    .map(attribute -> cb.like(
+                            cb.lower(root.get(attribute)),
+                            "%" + filter.get(attribute).toLowerCase() + "%"))
+                    .toArray(Predicate[]::new));
+        }
         TypedQuery<E> typedQuery = entityManager.createQuery(cq);
         typedQuery.setFirstResult(firstResult);
         typedQuery.setMaxResults(size);
         return typedQuery.getResultList();
+    }
+
+    public long countFiltered(Map<String, String> filter) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        final Root<E> root = cq.from(entityClass);
+        cq.select(cb.count(root));
+        if (!filter.isEmpty()) {
+            cq.where(filter.keySet().stream()
+                    .map(attribute -> cb.like(
+                            cb.lower(root.get(attribute)),
+                            "%" + filter.get(attribute).toLowerCase() + "%"))
+                    .toArray(Predicate[]::new));
+        }
+        TypedQuery<Long> typedQuery = entityManager.createQuery(cq);
+        return typedQuery.getSingleResult();
     }
 }

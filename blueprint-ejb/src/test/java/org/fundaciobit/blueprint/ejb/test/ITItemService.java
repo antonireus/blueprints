@@ -16,11 +16,9 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.persistence.metamodel.SingularAttribute;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RunWith(Arquillian.class)
 public class ITItemService {
@@ -73,11 +71,7 @@ public class ITItemService {
 
         Assert.assertEquals(3, itemService.findAll().size());
 
-        Map<SingularAttribute<Item, ?>, Object> filters = new HashMap<>();
-        filters.put(Item_.name, "Test");
-
-        List<Item> result = itemService.findFiltered(0, 5, filters);
-
+        List<Item> result = itemService.findFiltered(0, 5, Collections.singletonMap(Item_.NAME, "tes"));
         Assert.assertEquals(2, result.size());
         Assert.assertEquals("Test", result.get(0).getName());
         Assert.assertEquals("Test", result.get(1).getName());

@@ -3,8 +3,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 >
 <ui:composition template="template.xhtml">
+
     <ui:define name="metadata">
         <f:metadata>
             <!-- Al principi de la vista, es fixarà el paràmetre rebut dins
@@ -13,15 +15,22 @@
             <f:viewAction action="#{editItemController.loadItem}" />
         </f:metadata>
     </ui:define>
-    <ui:define name="title">
-        <h:outputText value="#{labels.item_new}" rendered="#{empty editItemController.item.id}" />
-        <h:outputText value="#{labels.item_edit}" rendered="#{!empty editItemController.item.id}" />
-    </ui:define>
-    <ui:define name="body">
 
+    <ui:define name="title">
+        <c:set var="isNew" value="#{empty editItemController.item.id}" />
+        <h:outputText value="#{isNew ? labels.item_new : labels.item_edit}" />
+    </ui:define>
+
+    <ui:define name="body">
         <h:form id="editItemForm">
             <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
             <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+
+                <h:panelGroup rendered="#{!isNew}">
+                    <h:outputLabel for="id" value="#{labels.item_id}" />
+                    <h:inputText id="id" value="#{editItemController.item.id}" readonly="true" />
+                </h:panelGroup>
+
                 <h:outputLabel for="name" value="#{labels.item_name}" />
                 <h:inputText id="name" value="#{editItemController.item.name}" />
                 <h:message for="name" errorStyle="color: red" />
@@ -30,19 +39,13 @@
                 <h:inputText id="nif" value="#{editItemController.item.nif}" />
                 <h:message for="nif" errorStyle="color: red" />
 
-                <h:commandButton value="#{labels.button_create}" action="#{editItemController.createItem}"
-                                 rendered="#{empty editItemController.item.id}"  >
+                <h:commandButton value="#{isNew ? labels.button_create : labels.button_update}"
+                                 action="#{editItemController.createOrUpdateItem(isNew)}" >
                     <f:ajax execute="@form" render="@form" />
                 </h:commandButton>
-
-                <h:commandButton value="#{labels.button_update}" action="#{editItemController.updateItem}"
-                                 rendered="#{!empty editItemController.item.id}"  >
-                    <f:ajax execute="@form" render="@form" />
-                </h:commandButton>
-
             </h:panelGrid>
         </h:form>
-
     </ui:define>
+
 </ui:composition>
 </html>

@@ -1,6 +1,5 @@
 package org.fundaciobit.blueprint.ejb.dao;
 
-import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
@@ -67,6 +66,7 @@ public interface DAO<K, E> {
      */
     long countAll();
 
-    List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size,
-                         Map<SingularAttribute<E, ?>, Object> filter);
+    List<E> findFiltered(@PositiveOrZero int firstResult, @Positive int size, Map<String, String> filter);
+
+    long countFiltered(Map<String, String> filter);
 }

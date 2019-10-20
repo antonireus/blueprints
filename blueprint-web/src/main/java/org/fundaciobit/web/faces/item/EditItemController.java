@@ -65,28 +65,19 @@ public class EditItemController implements Serializable {
     }
 
     /**
-     * Cridat pel botó d'actualitzar.
+     * Cridat pel botó de crear o actualitzar.
+     * @param isNew indica si és un registre nou i s'ha de crear (true) o és una actualització (false)
      * @return id de navegació
      */
-    public String updateItem() {
-        LOG.info("updateItem");
-        itemService.update(item);
-        context.addMessage(null, new FacesMessage("Modificació correcte"));
-        // Els missatges no aguanten una redirecció ja que no es la mateixa petició
-        // amb l'objecte flash podem assegurar que es guardin fins la visualització
-        flash.setKeepMessages(true);
-        // Redireccionam cap al llistat d'items
-        return "itemList?faces-redirect=true";
-    }
-
-    /**
-     * Cridat pel botó de crear.
-     * @return id de navegació
-     */
-    public String createItem() {
-        LOG.info("createItem");
-        itemService.create(item);
-        context.addMessage(null, new FacesMessage("Creació correcte"));
+    public String createOrUpdateItem(boolean isNew) {
+        LOG.info("createOrUpdateItem(isNew=" + isNew + ")");
+        if (isNew) {
+            itemService.create(item);
+            context.addMessage(null, new FacesMessage("Creació correcte"));
+        } else {
+            itemService.update(item);
+            context.addMessage(null, new FacesMessage("Modificació correcte"));
+        }
         // Els missatges no aguanten una redirecció ja que no es la mateixa petició
         // amb l'objecte flash podem assegurar que es guardin fins la visualització
         flash.setKeepMessages(true);

@@ -9,7 +9,9 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -26,11 +28,17 @@ public class ListItemController implements Serializable {
 
     private List<Item> items;
 
+    private Map<String, String> filter = new HashMap<>();
+
+    private PaginationHelper pagination = new PaginationHelper(5);
+
     public List<Item> getItems() {
         return items;
     }
 
-    private PaginationHelper pagination = new PaginationHelper(5);
+    public Map<String, String> getFilter() {
+        return filter;
+    }
 
     public PaginationHelper getPagination() {
         return pagination;
@@ -42,9 +50,10 @@ public class ListItemController implements Serializable {
         loadList();
     }
 
-    private void loadList() {
-        pagination.setCount((int) itemService.countAll());
-        items = itemService.findAll(pagination.getPageFirstItem(), pagination.getPageSize());
+    public void loadList() {
+        LOG.info("loadList. filter=" + filter);
+        pagination.setCount((int) itemService.countFiltered(filter));
+        items = itemService.findFiltered(pagination.getPageFirstItem(), pagination.getPageSize(),filter);
     }
 
     public void next() {
