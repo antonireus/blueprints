@@ -3,7 +3,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 >
 <ui:composition template="template.xhtml">
 
@@ -11,14 +10,13 @@
         <f:metadata>
             <!-- Al principi de la vista, es fixarà el paràmetre rebut dins
             l'id de l'ítem, i amb l'acció loadItem el carregarem. -->
-            <f:viewParam name="id" value="#{editItemController.item.id}" />
-            <f:viewAction action="#{editItemController.loadItem}" />
+            <f:viewParam name="id" value="#{editItem.item.id}" />
+            <f:viewAction action="#{editItem.loadItem}" />
         </f:metadata>
     </ui:define>
 
     <ui:define name="title">
-        <c:set var="isNew" value="#{empty editItemController.item.id}" />
-        <h:outputText value="#{isNew ? labels.item_new : labels.item_edit}" />
+        <h:outputText value="#{editItem.create ? labels.item_new : labels.item_edit}" />
     </ui:define>
 
     <ui:define name="body">
@@ -26,23 +24,24 @@
             <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
             <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
 
-                <h:panelGroup rendered="#{!isNew}">
-                    <h:outputLabel for="id" value="#{labels.item_id}" />
-                    <h:inputText id="id" value="#{editItemController.item.id}" readonly="true" />
-                </h:panelGroup>
+                <h:outputLabel for="id" value="#{labels.item_id}" rendered="#{!editItem.create}" />
+                <h:inputText id="id" value="#{editItem.item.id}" readonly="true" rendered="#{!editItem.create}" />
+                <h:outputText rendered="#{!editItem.create}" />
 
                 <h:outputLabel for="name" value="#{labels.item_name}" />
-                <h:inputText id="name" value="#{editItemController.item.name}" />
+                <h:inputText id="name" value="#{editItem.item.name}" />
                 <h:message for="name" errorStyle="color: red" />
 
                 <h:outputLabel for="nif" value="#{labels.item_nif}" />
-                <h:inputText id="nif" value="#{editItemController.item.nif}" />
+                <h:inputText id="nif" value="#{editItem.item.nif}" />
                 <h:message for="nif" errorStyle="color: red" />
 
-                <h:commandButton value="#{isNew ? labels.button_create : labels.button_update}"
-                                 action="#{editItemController.createOrUpdateItem(isNew)}" >
+                <h:commandButton value="#{editItem.create ? labels.button_create : labels.button_update}"
+                                 action="#{editItem.createOrUpdateItem}" >
                     <f:ajax execute="@form" render="@form" />
                 </h:commandButton>
+                <h:button value="#{labels.button_back}" outcome="listItem" />
+
             </h:panelGrid>
         </h:form>
     </ui:define>

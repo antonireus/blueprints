@@ -17,14 +17,18 @@ import java.util.logging.Logger;
 /**
  * Bean emprat a JSF per gestonar el llistat d'Items.
  */
-@Named
+@Named("listItem")
 @ViewScoped
 public class ListItemController implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(ListItemController.class.getName());
 
+    // RECURSOS
+
     @EJB
     private ItemService itemService;
+
+    // PROPIETATS
 
     private List<Item> items;
 
@@ -43,6 +47,8 @@ public class ListItemController implements Serializable {
     public PaginationHelper getPagination() {
         return pagination;
     }
+
+    // MÈTODES
 
     @PostConstruct
     private void init() {

@@ -1,5 +1,8 @@
 package org.fundaciobit.web.faces;
 
+/**
+ * Per mantenir l'estat bàsic d'una paginació.
+ */
 public class PaginationHelper {
 
     private int pageSize;
@@ -10,12 +13,12 @@ public class PaginationHelper {
         this.pageSize = pageSize;
     }
 
-    public int getPageFirstItem() {
-        return page*pageSize;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public int getCount() {
-        return count;
+    public int getPageFirstItem() {
+        return page*pageSize;
     }
 
     public void setCount(int count) {
@@ -26,14 +29,14 @@ public class PaginationHelper {
         return (page+1)*pageSize+1 <= count;
     }
 
+    public boolean isHasPreviousPage() {
+        return page > 0;
+    }
+
     public void nextPage() {
         if (isHasNextPage()) {
             page++;
         }
-    }
-
-    public boolean isHasPreviousPage() {
-        return page > 0;
     }
 
     public void previousPage() {
@@ -41,9 +44,4 @@ public class PaginationHelper {
             page--;
         }
     }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
 }

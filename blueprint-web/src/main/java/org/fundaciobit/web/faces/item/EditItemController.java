@@ -16,13 +16,15 @@ import java.util.logging.Logger;
 
 /**
  * Bean emprat a JSF per gestionar l'alta i l'actualització de Items.
- * Empram ViewScoped perquè amb RequestScope no funciona correctametn l'AJAX.
+ * Empram ViewScoped perquè amb RequestScope no funcionaria l'AJAX.
  */
-@Named
+@Named("editItem")
 @ViewScoped
 public class EditItemController implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(EditItemController.class.getName());
+
+    // RECURSOS
 
     @Inject
     private FacesContext context;
@@ -36,6 +38,8 @@ public class EditItemController implements Serializable {
     @EJB
     private ItemService itemService;
 
+    // PROPIETATS
+
     /**
      * Instància de l'Item que guardarà l'estat.
      */
@@ -45,9 +49,11 @@ public class EditItemController implements Serializable {
         return item;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public boolean isCreate() {
+        return item.getId() == null;
     }
+
+    // MÈTODES
 
     @PostConstruct
     private void init() {
@@ -59,6 +65,7 @@ public class EditItemController implements Serializable {
      * Cridat com acció al principi de la vista per precarregar l'Item amb el paràmetre rebut com id.
      */
     public void loadItem() {
+        LOG.info("loadItem()");
         if (item.getId() != null) {
             item = itemService.findById(item.getId());
         }
@@ -66,12 +73,11 @@ public class EditItemController implements Serializable {
 
     /**
      * Cridat pel botó de crear o actualitzar.
-     * @param isNew indica si és un registre nou i s'ha de crear (true) o és una actualització (false)
      * @return id de navegació
      */
-    public String createOrUpdateItem(boolean isNew) {
-        LOG.info("createOrUpdateItem(isNew=" + isNew + ")");
-        if (isNew) {
+    public String createOrUpdateItem() {
+        LOG.info("createOrUpdateItem() isCreate=" + isCreate());
+        if (isCreate()) {
             itemService.create(item);
             context.addMessage(null, new FacesMessage("Creació correcte"));
         } else {
@@ -82,6 +88,6 @@ public class EditItemController implements Serializable {
         // amb l'objecte flash podem assegurar que es guardin fins la visualització
         flash.setKeepMessages(true);
         // Redireccionam cap al llistat d'items
-        return "itemList?faces-redirect=true";
+        return "listItem?faces-redirect=true";
     }
 }

@@ -24,22 +24,24 @@
 
         <h:form id="filterForm">
             <h:outputLabel for="name" value="#{labels.item_name}" />
-            <h:inputText id="name" value="#{listItemController.filter[itemFields.NAME]}" />
+            <h:inputText id="name" value="#{listItem.filter[itemFields.NAME]}" />
             <h:outputLabel for="nif" value="#{labels.item_nif}" />
-            <h:inputText id="nif" value="#{listItemController.filter[itemFields.NIF]}" />
-            <h:commandButton action="#{listItemController.loadList}" value="Filter">
+            <h:inputText id="nif" value="#{listItem.filter[itemFields.NIF]}" />
+            <h:commandButton action="#{listItem.loadList}" value="Filter">
                 <f:ajax execute="@form" render="dataTable :paginationForm" />
             </h:commandButton>
         </h:form>
 
-        <h:dataTable id="dataTable" value="#{listItemController.items}" var="item">
+        <h:dataTable id="dataTable" value="#{listItem.items}" var="item">
+            <!--
             <h:column>
                 <f:facet name="header">
                     Índex
                 </f:facet>
                 <h:outputText
-                        value="#{listItemController.items.indexOf(item) + listItemController.pagination.pageFirstItem}"/>
+                        value="#{listItem.items.indexOf(item) + listItem.pagination.pageFirstItem}"/>
             </h:column>
+            -->
             <h:column>
                 <f:facet name="header">
                     <h:outputText value="#{labels.item_id}"/>
@@ -65,14 +67,14 @@
         <h:form id="paginationForm">
             <h:commandButton
                     value="&lt;&lt;"
-                    disabled="#{!listItemController.pagination.hasPreviousPage}"
-                    action="#{listItemController.previous}">
+                    disabled="#{!listItem.pagination.hasPreviousPage}"
+                    action="#{listItem.previous}">
                 <f:ajax render="@form dataTable" />
             </h:commandButton>
             <h:commandButton
                     value="&gt;&gt;"
-                    disabled="#{!listItemController.pagination.hasNextPage}"
-                    action="#{listItemController.next}">
+                    disabled="#{!listItem.pagination.hasNextPage}"
+                    action="#{listItem.next}">
                 <f:ajax render="@form dataTable" />
             </h:commandButton>
         </h:form>

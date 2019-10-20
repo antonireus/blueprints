@@ -7,7 +7,11 @@
     * Si es reaprofita una mateixa classe per implementar l'Encoder i el Decoder d'un Endpoint Websocket. Es
      crida dos pics. (Reportar!!!)
     * El getSupportedLocales() de Application de JSF afegeix el <default-locale> a la llista de <supported-locale>
+    * La paraula "new" no es pot emprar com a nom de propietat a EL amb MyFaces. Per exemple, amb un mètode
+    bean.isNew(), emprar "bean.new" dona un error. Cal emprar "bean.isNew()".
 
 - Diferències vàries
-    * L'especificació no ho manda, però Glassfish i Wildfly injecten dins les classes Encoder i Decoder de websocket. En canvi wildfly no.
-    * Durant l'event prePersist de JPA EclipseLink(Glassfish/Liberty) ja té preassignat l'identificador (ha fet crida a la seqüència).
+    * L'especificació no ho manda, però Glassfish i Wildfly injecten dins les classes Encoder i Decoder
+     de websocket. En canvi wildfly no.
+    * Durant l'event prePersist de JPA EclipseLink(Glassfish/Liberty) ja té preassignat l'identificador
+     (ha fet crida a la seqüència).
