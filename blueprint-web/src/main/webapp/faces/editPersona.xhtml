@@ -12,6 +12,7 @@
             l'id, i amb l'acció "load" el carregarem. -->
             <f:viewParam name="id" value="#{editPersona.entity.id}" />
             <f:viewAction action="#{editPersona.load}" />
+            <f:importConstants type="org.fundaciobit.blueprint.ejb.jpa.Persona.Estat" var="estats" />
         </f:metadata>
     </ui:define>
 
@@ -49,6 +50,12 @@
                     <f:convertDateTime pattern="dd-MM-yyyy"/>
                 </h:inputText>
                 <h:message for="dataNaixement" errorStyle="color: red" />
+
+                <h:outputLabel for="estat" value="#{labels.persona_estat}" />
+                <h:selectOneMenu id="estat" value="#{editPersona.entity.estat}">
+                    <f:selectItems value="#{estats.values()}" />
+                </h:selectOneMenu>
+                <h:message for="estat" errorStyle="color: red" />
 
                 <h:commandButton value="#{editPersona.create ? labels.button_create : labels.button_update}"
                                  action="#{editPersona.createOrUpdate}" >

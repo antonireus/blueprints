@@ -4,6 +4,7 @@ import org.fundaciobit.blueprint.common.constraint.NIF;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +24,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.Date;
 import java.util.Objects;
+
+import static javax.persistence.EnumType.ORDINAL;
 
 /**
  * Requisits de les classes persistents:
@@ -56,6 +60,14 @@ public class Persona extends BaseEntity<Long> {
     * Constructor buid.
     */
    public Persona() {
+   }
+
+   // ENUMERACIONS
+
+   public enum Estat {
+      ACTIU,
+      INACTIU,
+      HISTORIC
    }
 
    // FIELDS
@@ -90,6 +102,12 @@ public class Persona extends BaseEntity<Long> {
    @Column(name = "DATANAIXEMENT", nullable = false)
    @XmlElement(required = true)
    private Date dataNaixement;
+
+   @NotNull
+   @Enumerated(ORDINAL)
+   @Column(name = "ESTAT", nullable = false)
+   @XmlTransient
+   private Estat estat;
 
    // GETTERS & SETTERS
 
@@ -140,6 +158,14 @@ public class Persona extends BaseEntity<Long> {
 
    public void setDataNaixement(Date dataNaixement) {
       this.dataNaixement = dataNaixement;
+   }
+
+   public Estat getEstat() {
+      return estat;
+   }
+
+   public void setEstat(Estat estat) {
+      this.estat = estat;
    }
 
    /*

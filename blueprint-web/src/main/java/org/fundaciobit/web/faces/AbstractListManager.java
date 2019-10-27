@@ -50,18 +50,6 @@ public abstract class AbstractListManager<K, E extends BaseEntity<K>> implements
 
     // MÈTODES
 
-    @SuppressWarnings("unchecked")
-    protected AbstractListManager() {
-        /*
-        Class<?> clazz = getClass();
-        while (!clazz.getSuperclass().equals(AbstractListManager.class)) {
-            clazz = clazz.getSuperclass();
-        }
-        ParameterizedType genericSuperclass = (ParameterizedType) clazz.getGenericSuperclass();
-        this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
-         */
-    }
-
     @PostConstruct
     private void init() {
         LOG.info("init");
