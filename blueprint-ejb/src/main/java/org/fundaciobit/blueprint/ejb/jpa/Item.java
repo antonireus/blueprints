@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,7 +28,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,10 +48,6 @@ import java.util.Objects;
         indexes = {@Index(name = "BLP_ITEM_PK_I", columnList = "ITEMID", unique = true)},
         uniqueConstraints = {@UniqueConstraint(name= "BLP_ITEM_NIF_UK", columnNames = "NIF")}
 )
-@NamedQuery(
-        name="findByNIF",
-        query="SELECT i FROM Item i WHERE i.nif LIKE :nif"
-)
 @NamedEntityGraph(
         name="item_description", attributeNodes = {
                 @NamedAttributeNode(value="description")
@@ -61,7 +55,7 @@ import java.util.Objects;
 )
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Item implements Serializable {
+public class Item extends BaseEntity<Long> {
 
    private static final long serialVersionUID = 1L;
 
@@ -106,6 +100,7 @@ public class Item implements Serializable {
     * Obté l'identificador del item.
     * @return Identificador del item.
     */
+   @Override
    public Long getId() {
       return id;
    }

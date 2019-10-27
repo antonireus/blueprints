@@ -6,8 +6,9 @@
         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
    <persistence-unit name="testBlueprintPU" transaction-type="RESOURCE_LOCAL">
 
-      <class>org.fundaciobit.blueprint.ejb.jpa.Item</class>
       <class>org.fundaciobit.blueprint.ejb.jpa.Counter</class>
+      <class>org.fundaciobit.blueprint.ejb.jpa.Item</class>
+      <class>org.fundaciobit.blueprint.ejb.jpa.Persona</class>
 
       <shared-cache-mode>NONE</shared-cache-mode>
       <validation-mode>NONE</validation-mode>

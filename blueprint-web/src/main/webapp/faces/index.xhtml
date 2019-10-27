@@ -10,7 +10,9 @@
         <ui:define name="body">
             <h:outputText value="#{labels.versio}" /> #{version.number}
 
-            <h:link outcome="listItem" value="#{labels.index_itemList}"/>
+            <h:link outcome="listItem" value="#{labels.index_itemList}" /><br />
+            <h:link outcome="listPersona" value="#{labels.index_personaList}" /><br />
+
         </ui:define>
     </ui:composition>
 </html>

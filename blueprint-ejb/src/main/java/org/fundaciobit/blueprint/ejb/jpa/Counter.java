@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 /**
  * Entitat per representar un contador: una clau i un nombre.
@@ -14,7 +13,7 @@ import java.io.Serializable;
 @Table(name = "BLP_COUNTER", indexes =
    @Index(name = "BLP_COUNTER_PK_I", columnList = "ID", unique = true)
 )
-public class Counter implements Serializable {
+public class Counter extends BaseEntity<String> {
 
    private static final long serialVersionUID = 1L;
 
@@ -35,6 +34,7 @@ public class Counter implements Serializable {
     * Obté l'identificador del comptador.
     * @return identificador del comptador.
     */
+   @Override
    public String getId() {
       return id;
    }

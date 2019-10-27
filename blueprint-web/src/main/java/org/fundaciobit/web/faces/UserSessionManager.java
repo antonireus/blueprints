@@ -18,9 +18,9 @@ import java.util.logging.Logger;
  */
 @Named("user")
 @SessionScoped
-public class UserSessionController implements Serializable {
+public class UserSessionManager implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(UserSessionController.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserSessionManager.class.getName());
 
     @Inject
     private FacesContext context;

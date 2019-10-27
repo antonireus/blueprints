@@ -1,0 +1,64 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<ui:composition template="template.xhtml">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <!-- Al principi de la vista, es fixarà el paràmetre rebut dins
+            l'id, i amb l'acció "load" el carregarem. -->
+            <f:viewParam name="id" value="#{editPersona.entity.id}" />
+            <f:viewAction action="#{editPersona.load}" />
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="title">
+        <h:outputText value="#{editPersona.create ? labels.persona_new : labels.persona_edit}" />
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="editPersonaForm">
+            <h:messages errorStyle="color: red" infoStyle="color: green" globalOnly="true"/>
+            <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+
+                <h:outputLabel for="id" value="#{labels.persona_id}" rendered="#{!editPersona.create}" />
+                <h:inputText id="id" value="#{editPersona.entity.id}" readonly="true" rendered="#{!editPersona.create}" />
+                <h:outputText rendered="#{!editPersona.create}" />
+
+                <h:outputLabel for="nif" value="#{labels.persona_nif}" />
+                <h:inputText id="nif" value="#{editPersona.entity.nif}" />
+                <h:message for="nif" errorStyle="color: red" />
+
+                <h:outputLabel for="nom" value="#{labels.persona_nom}" />
+                <h:inputText id="nom" value="#{editPersona.entity.nom}" />
+                <h:message for="nom" errorStyle="color: red" />
+
+                <h:outputLabel for="primerCognom" value="#{labels.persona_primerCognom}" />
+                <h:inputText id="primerCognom" value="#{editPersona.entity.primerCognom}" />
+                <h:message for="primerCognom" errorStyle="color: red" />
+
+                <h:outputLabel for="segonCognom" value="#{labels.persona_segonCognom}" />
+                <h:inputText id="segonCognom" value="#{editPersona.entity.segonCognom}" />
+                <h:message for="segonCognom" errorStyle="color: red" />
+
+                <h:outputLabel for="dataNaixement" value="#{labels.persona_dataNaixement}" />
+                <h:inputText id="dataNaixement" value="#{editPersona.entity.dataNaixement}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:inputText>
+                <h:message for="dataNaixement" errorStyle="color: red" />
+
+                <h:commandButton value="#{editPersona.create ? labels.button_create : labels.button_update}"
+                                 action="#{editPersona.createOrUpdate}" >
+                    <f:ajax execute="@form" render="@form" />
+                </h:commandButton>
+                <h:button value="#{labels.button_back}" outcome="listPersona" />
+
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>

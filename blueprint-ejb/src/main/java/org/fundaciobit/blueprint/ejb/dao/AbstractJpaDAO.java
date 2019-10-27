@@ -1,6 +1,7 @@
 package org.fundaciobit.blueprint.ejb.dao;
 
 import org.fundaciobit.blueprint.common.interceptor.Logged;
+import org.fundaciobit.blueprint.ejb.jpa.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @param <E> Tipus de l'entitat.
  */
 @Logged
-public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
+public abstract class AbstractJpaDAO<K, E extends BaseEntity<K>> implements DAO<K, E> {
 
     /**
      * Gestor d'entitats de JPA.
@@ -36,7 +37,7 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
     private final Class<E> entityClass;
 
     /**
-     * Construtor per defecte. Emmagatzema a {@code entityClass} el tipus d'entitat.
+     * Construtor per defecte. Emmagatzema a {@link #entityClass} el tipus d'entitat.
      */
     @SuppressWarnings("unchecked")
     protected AbstractJpaDAO() {
@@ -148,9 +149,10 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         cq.select(root);
         if (!filter.isEmpty()) {
             cq.where(filter.keySet().stream()
-                    .map(attribute -> cb.like(
-                            cb.lower(root.get(attribute)),
-                            "%" + filter.get(attribute).toLowerCase() + "%"))
+                    .filter(key -> filter.get(key) != null)
+                    .map(key -> cb.like(
+                            cb.lower(root.get(key)),
+                            "%" + filter.get(key).toLowerCase() + "%"))
                     .toArray(Predicate[]::new));
         }
         TypedQuery<E> typedQuery = entityManager.createQuery(cq);
@@ -167,9 +169,10 @@ public abstract class AbstractJpaDAO<K, E> implements DAO<K, E> {
         cq.select(cb.count(root));
         if (!filter.isEmpty()) {
             cq.where(filter.keySet().stream()
-                    .map(attribute -> cb.like(
-                            cb.lower(root.get(attribute)),
-                            "%" + filter.get(attribute).toLowerCase() + "%"))
+                    .filter(key -> filter.get(key) != null)
+                    .map(key -> cb.like(
+                            cb.lower(root.get(key)),
+                            "%" + filter.get(key).toLowerCase() + "%"))
                     .toArray(Predicate[]::new));
         }
         TypedQuery<Long> typedQuery = entityManager.createQuery(cq);

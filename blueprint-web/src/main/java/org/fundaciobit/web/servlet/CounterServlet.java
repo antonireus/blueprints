@@ -28,8 +28,8 @@ public class CounterServlet extends HttpServlet {
      * La implementació singleton empra la gestió de concurrència sobre l'EJB.
      * La implemntació normal empra un lock de JPA a nivell de base de dades.
      */
-    @EJB(beanName = "CounterServiceSingletonBean")
     //@EJB(beanName = "CounterServiceBean")
+    @EJB(beanName = "CounterServiceSingletonBean")
     private CounterService counterService;
 
     private static final String COUNTER_ID = "COUNTER_ID";

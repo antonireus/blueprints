@@ -20,9 +20,9 @@ import java.util.logging.Logger;
  */
 @Named("editItem")
 @ViewScoped
-public class EditItemController implements Serializable {
+public class EditItemManager implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(EditItemController.class.getName());
+    private static final Logger LOG = Logger.getLogger(EditItemManager.class.getName());
 
     // RECURSOS
 
