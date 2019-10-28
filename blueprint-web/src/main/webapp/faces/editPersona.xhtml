@@ -1,5 +1,4 @@
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -12,6 +11,7 @@
             l'id, i amb l'acció "load" el carregarem. -->
             <f:viewParam name="id" value="#{editPersona.entity.id}" />
             <f:viewAction action="#{editPersona.load}" />
+            <!-- Pels valors de la enumeració -->
             <f:importConstants type="org.fundaciobit.blueprint.ejb.jpa.Persona.Estat" var="estats" />
         </f:metadata>
     </ui:define>
@@ -53,7 +53,7 @@
 
                 <h:outputLabel for="estat" value="#{labels.persona_estat}" />
                 <h:selectOneMenu id="estat" value="#{editPersona.entity.estat}">
-                    <f:selectItems value="#{estats.values()}" />
+                    <f:selectItems value="#{estats.values()}" var="estat" itemLabel="#{labels['persona_estat_' += estat]}"/>
                 </h:selectOneMenu>
                 <h:message for="estat" errorStyle="color: red" />
 
