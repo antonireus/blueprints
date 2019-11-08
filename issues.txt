@@ -10,6 +10,10 @@
     * La paraula "new" no es pot emprar com a nom de propietat a EL amb MyFaces. Per exemple, amb un mètode
     bean.isNew(), emprar "bean.new" dona un error. Cal emprar "bean.isNew()".
 
+- Wildfly
+    * La serialització d'objectes java.util.Date sembla que no segueix el format defint per l'especificació i retorna
+    el valor en milisegons.
+
 - Diferències vàries
     * L'especificació no ho manda, però Glassfish i Wildfly injecten dins les classes Encoder i Decoder
      de websocket. En canvi wildfly no.

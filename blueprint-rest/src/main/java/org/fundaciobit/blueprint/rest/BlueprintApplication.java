@@ -1,8 +1,5 @@
 package org.fundaciobit.blueprint.rest;
 
-import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
-import io.swagger.v3.oas.integration.OpenApiConfigurationException;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletConfig;
 import javax.ws.rs.ApplicationPath;
@@ -23,6 +20,7 @@ public class BlueprintApplication extends Application {
     @PostConstruct
     public void init() {
         log.info("Init REST Application");
+        /*
         try {
             new JaxrsOpenApiContextBuilder<>()
                     .servletConfig(servletConfig)
@@ -32,6 +30,6 @@ public class BlueprintApplication extends Application {
         } catch (OpenApiConfigurationException e) {
             log.severe("Error inicialitzant OpenApi " + e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-        }
+        }*/
     }
 }
