@@ -10,10 +10,17 @@
       <validation-mode>CALLBACK</validation-mode>
       <properties>
          <!-- Per les propietats estandard veure punt 8.2.1.9 de l'especificació JPA -->
+
+         <!-- Generar dinàmicament les taules. No emprar mai en producció -->
          <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+
+         <!-- Generar els scripts al sistema de fitxers -->
+         <!--
          <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create" />
          <property name="javax.persistence.schema-generation.scripts.create-target" value="create.sql" />
          <property name="javax.persistence.schema-generation.scripts.drop-target" value="drop.sql" />
+         -->
+
          <!--
          Properties for Hibernate
          Veure: https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
