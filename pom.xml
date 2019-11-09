@@ -11,6 +11,7 @@
     <modules>
         <module>blueprint-common</module>
         <module>blueprint-ejb</module>
+        <module>blueprint-rest</module>
         <module>blueprint-web</module>
         <module>blueprint-ear</module>
     </modules>
@@ -67,6 +68,13 @@
                 <artifactId>blueprint-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.fundaciobit.blueprint</groupId>
+                <artifactId>blueprint-rest</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
             </dependency>
 
             <dependency>
@@ -270,16 +278,10 @@
             <!-- Per incloure el mòdul web addicional d'API REST -->
             <id>apirest</id>
             <modules>
-                <module>blueprint-rest</module>
+
             </modules>
             <dependencyManagement>
                 <dependencies>
-                    <dependency>
-                        <groupId>org.fundaciobit.blueprint</groupId>
-                        <artifactId>blueprint-rest</artifactId>
-                        <version>${project.version}</version>
-                        <type>war</type>
-                    </dependency>
                 </dependencies>
             </dependencyManagement>
         </profile>

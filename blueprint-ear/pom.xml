@@ -27,6 +27,11 @@
         </dependency>
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
+            <artifactId>blueprint-rest</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.fundaciobit.blueprint</groupId>
             <artifactId>blueprint-web</artifactId>
             <type>war</type>
         </dependency>
@@ -52,6 +57,11 @@
                         </ejbModule>
                         <webModule>
                             <groupId>org.fundaciobit.blueprint</groupId>
+                            <artifactId>blueprint-rest</artifactId>
+                            <contextRoot>blueprintrest</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>org.fundaciobit.blueprint</groupId>
                             <artifactId>blueprint-web</artifactId>
                             <contextRoot>blueprint</contextRoot>
                         </webModule>
@@ -62,34 +72,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>apirest</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.fundaciobit.blueprint</groupId>
-                    <artifactId>blueprint-rest</artifactId>
-                    <type>war</type>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-ear-plugin</artifactId>
-                        <configuration>
-                            <modules combine.children="append">
-                                <webModule>
-                                    <groupId>org.fundaciobit.blueprint</groupId>
-                                    <artifactId>blueprint-rest</artifactId>
-                                    <contextRoot>blueprintrest</contextRoot>
-                                </webModule>
-                            </modules>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <!-- ARRANCADA DE SERVIDOR WILDFLY -->
         <profile>
             <id>wildfly</id>

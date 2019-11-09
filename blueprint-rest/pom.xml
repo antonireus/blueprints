@@ -25,11 +25,6 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
         </dependency>
-        <!-- Hauria d'estar dins la dependència anterior ja que pertany a Java EE però no hi és -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.fundaciobit.blueprint</groupId>
@@ -44,67 +39,84 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-jaxrs2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-        -->
-
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <resources>
-            <resource><!-- Per filtar openapi-configuration.json -->
+            <resource><!-- Per defecte no ho incloem, si no s'activa el profile swagger -->
                 <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>true</filtering>
+                <excludes>
+                    <exclude>openapi-configuration.json</exclude>
+                </excludes>
             </resource>
         </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <failOnMissingWebXml>true</failOnMissingWebXml>
-                    <!--
-                    <webResources>
-                        <resource>
-                            <directory>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist</directory>
-                            <filtering>false</filtering>
-                            <excludes>
-                                <exclude>index.html</exclude>
-                            </excludes>
-                        </resource>
-                    </webResources>
-                    -->
+                    <packagingExcludes>index.jsp</packagingExcludes>
                 </configuration>
             </plugin>
-
-            <!--
-            <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <version>1.4.2</version>
-                <executions>
-                    <execution>
-                        <id>swagger-ui</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <skipCache>false</skipCache>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/v${swagger-ui.version}.tar.gz</url>
-                            <unpack>true</unpack>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>swagger</id>
+            <properties />
+            <dependencies>
+                <dependency>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-jaxrs2</artifactId>
+                    <version>${swagger.version}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <resources>
+                    <resource><!-- Per filtar openapi-configuration.json -->
+                        <directory>${project.basedir}/src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration combine.self="override">
+                            <webResources>
+                                <resource>
+                                    <directory>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist</directory>
+                                    <filtering>false</filtering>
+                                    <excludes>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>download-maven-plugin</artifactId>
+                        <version>1.4.2</version>
+                        <executions>
+                            <execution>
+                                <id>swagger-ui</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <skipCache>false</skipCache>
+                                    <url>https://github.com/swagger-api/swagger-ui/archive/v${swagger-ui.version}.tar.gz</url>
+                                    <unpack>true</unpack>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
