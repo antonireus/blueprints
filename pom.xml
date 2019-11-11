@@ -27,7 +27,7 @@
         <!-- Per defecte, no fer cap tipus de test -->
         <maven.test.skip>true</maven.test.skip>
 
-        <postgresql.driver.version>42.2.6</postgresql.driver.version>
+        <postgresql.driver.version>42.2.8</postgresql.driver.version>
     </properties>
 
     <dependencyManagement>
@@ -116,7 +116,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian.container</groupId>
                 <artifactId>arquillian-weld-embedded</artifactId>
-                <version>2.0.0.Final</version>
+                <version>2.0.1.Final</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -150,7 +150,7 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.199</version>
+                <version>1.4.200</version>
                 <scope>test</scope>
             </dependency>
 
@@ -179,7 +179,7 @@
             <dependency>
                 <groupId>com.icegreen</groupId>
                 <artifactId>greenmail</artifactId>
-                <version>1.5.10</version>
+                <version>1.5.11</version>
                 <scope>test</scope>
             </dependency>
 
