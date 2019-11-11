@@ -322,6 +322,7 @@
                                 <type>zip</type>
                             </runtimeArtifact>
                             <deployPackages>project</deployPackages>
+                            <looseApplication>false</looseApplication>
                             <stripVersion>true</stripVersion>
                         </configuration>
                         <executions>
