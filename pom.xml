@@ -273,18 +273,4 @@
         </pluginManagement>
     </build>
 
-    <profiles>
-        <profile>
-            <!-- Per incloure el mòdul web addicional d'API REST -->
-            <id>apirest</id>
-            <modules>
-
-            </modules>
-            <dependencyManagement>
-                <dependencies>
-                </dependencies>
-            </dependencyManagement>
-        </profile>
-    </profiles>
-
 </project>
