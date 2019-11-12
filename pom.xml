@@ -124,6 +124,13 @@
                 <artifactId>weld-se-core</artifactId>
                 <version>3.1.2.Final</version>
                 <scope>test</scope>
+                <exclusions>
+                    <!-- hibernate-validator ja du una versió més recent -->
+                    <exclusion>
+                        <groupId>org.jboss.logging</groupId>
+                        <artifactId>jboss-logging</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- Per tests de Bean Validation -->
@@ -181,6 +188,12 @@
                 <artifactId>greenmail</artifactId>
                 <version>1.5.11</version>
                 <scope>test</scope>
+                <exclusions><!-- Ja està dins l'api Java EE -->
+                    <exclusion>
+                        <groupId>com.sun.mail</groupId>
+                        <artifactId>javax.mail</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -272,10 +285,46 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <!--
+                Gestió de versions de dependències/plugins
+                Veure: https://www.mojohaus.org/versions-maven-plugin/
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.7</version>
+            </plugin>
+            <!--
+                Gestió de requisits del build
+                Veure: https://maven.apache.org/enforcer/enforcer-rules/index.html
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <configuration>
+                    <rules>
+                        <!-- En principi restrimgim a Maven 3.6.x -->
+                        <requireMavenVersion>
+                            <version>[3.6,3.7)</version>
+                        </requireMavenVersion>
+                        <!-- I Java 11.x.x -->
+                        <requireJavaVersion>
+                            <version>[1.8,12)</version>
+                        </requireJavaVersion>
+                        <requireReleaseDeps />
+                        <banDuplicatePomDependencyVersions/>
+                        <dependencyConvergence />
+                        <reactorModuleConvergence />
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
