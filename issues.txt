@@ -11,8 +11,9 @@
     bean.isNew(), emprar "bean.new" dona un error. Cal emprar "bean.isNew()".
 
 - Wildfly
-    * La serialització d'objectes java.util.Date sembla que no segueix el format defint per l'especificació i retorna
-    el valor en milisegons.
+    * JAX-RS. Quan els beans estan anotats amb JAXB, i es serializten en JSON no empra l'estàndard JSONB.
+    Això afecta principalment al formats de les dates o l'ordre.
+    Reportat a: https://issues.jboss.org/browse/RESTEASY-2413
 
 - Diferències vàries
     * L'especificació no ho manda, però Glassfish i Wildfly injecten dins les classes Encoder i Decoder
