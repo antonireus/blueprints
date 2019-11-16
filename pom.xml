@@ -320,7 +320,6 @@
                         <requireMavenVersion>
                             <version>[3.6,3.7)</version>
                         </requireMavenVersion>
-                        <!-- I Java 11.x.x -->
                         <requireJavaVersion>
                             <version>[1.8,12)</version>
                         </requireJavaVersion>
