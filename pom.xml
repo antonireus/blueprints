@@ -27,7 +27,7 @@
         <!-- Per defecte, no fer cap tipus de test -->
         <maven.test.skip>true</maven.test.skip>
 
-        <postgresql.driver.version>42.2.8</postgresql.driver.version>
+        <postgresql.driver.version>42.2.10</postgresql.driver.version>
     </properties>
 
     <dependencyManagement>
@@ -37,7 +37,7 @@
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>8.0</version>
+                <version>8.0.1</version>
                 <scope>provided</scope>
             </dependency>
             <!-- Hauria d'estar dins la dependència anterior ja que pertany a Java EE però no hi és -->
